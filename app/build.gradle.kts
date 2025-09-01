@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.slivsound.app"
+    namespace = "com.slivsound"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.slivsound.app"
+        applicationId = "com.slivsound"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

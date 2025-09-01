@@ -1,8 +1,8 @@
-package com.slivsound.app.featurename.presentation
+package com.slivsound.featurename.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.slivsound.app.featurename.domain.NameRepository
+import com.slivsound.featurename.domain.NameRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

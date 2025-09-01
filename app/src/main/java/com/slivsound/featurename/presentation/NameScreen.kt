@@ -1,4 +1,4 @@
-package com.slivsound.app.featurename.presentation
+package com.slivsound.featurename.presentation
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column

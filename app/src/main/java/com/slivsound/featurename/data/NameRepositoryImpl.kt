@@ -1,6 +1,6 @@
-package com.slivsound.app.featurename.data
+package com.slivsound.featurename.data
 
-import com.slivsound.app.featurename.domain.NameRepository
+import com.slivsound.featurename.domain.NameRepository
 import org.koin.core.annotation.Single
 
 @Single(binds = [NameRepository::class])

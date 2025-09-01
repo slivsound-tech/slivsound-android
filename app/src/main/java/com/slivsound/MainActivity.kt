@@ -1,4 +1,4 @@
-package com.slivsound.app
+package com.slivsound
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.slivsound.app.featurename.presentation.NameScreen
-import com.slivsound.app.ui.theme.SlivsoundTheme
+import com.slivsound.featurename.presentation.NameScreen
+import com.slivsound.theme.SlivsoundTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.slivsound.app
+package com.slivsound
 
 import org.junit.Test
 

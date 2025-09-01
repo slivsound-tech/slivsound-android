@@ -1,4 +1,4 @@
-package com.slivsound.app.featurename.domain
+package com.slivsound.featurename.domain
 
 interface NameRepository {
     fun getName(): String
