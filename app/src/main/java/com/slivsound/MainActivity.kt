@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.slivsound.featurename.presentation.NameScreen
-import com.slivsound.theme.SlivsoundTheme
+import com.slivsound.ui.theme.SlivsoundTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

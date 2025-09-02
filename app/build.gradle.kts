@@ -47,6 +47,8 @@ ksp {
 
 dependencies {
 
+    implementation("androidx.compose.material3:material3:1.2.1")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
