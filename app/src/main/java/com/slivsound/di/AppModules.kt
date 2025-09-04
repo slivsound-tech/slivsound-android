@@ -8,5 +8,4 @@ import org.koin.core.annotation.Module
 @ComponentScan("com.slivsound")
 class AppModules
 
-// Expose a helper to collect modules list in Application
 fun appModules() = listOf(AppModules().module)
