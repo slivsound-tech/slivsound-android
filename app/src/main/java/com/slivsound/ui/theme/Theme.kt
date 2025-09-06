@@ -44,6 +44,7 @@ private val DarkColors = darkColorScheme(
     error = Error,
     onError = White
 )
+
 @Composable
 fun SlivsoundTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
