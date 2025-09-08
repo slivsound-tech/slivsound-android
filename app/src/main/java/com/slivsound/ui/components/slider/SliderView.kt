@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun AppSlider(
+fun SliderView(
     value: Float,
     onValueChange: (Float) -> Unit,
     modifier: Modifier = Modifier,
