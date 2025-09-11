@@ -1,4 +1,4 @@
-package com.slivsound.ui.components.button
+package com.slivsound.ui.components.button.primaryButton
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

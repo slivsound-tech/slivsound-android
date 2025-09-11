@@ -1,4 +1,4 @@
-package com.slivsound.ui.components.button
+package com.slivsound.ui.components.button.outlineButton
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,30 +12,20 @@ import com.slivsound.ui.theme.SlivsoundTheme
 
 @Preview(showBackground = true)
 @Composable
-fun ButtonPreview() {
+fun OutlineButtonPreview() {
+
     SlivsoundTheme {
         Column(modifier = Modifier.padding(10.dp)) {
-            PrimaryButton(
-                text = "Primary Enabled",
-                onClick = {}
-            )
-            Spacer(Modifier.height(8.dp))
-            PrimaryButton(
-                text = "Primary Loading",
-                onClick = {}
-            )
-            Spacer(Modifier.height(8.dp))
-            PrimaryButton(
-                text = "Primary Disabled",
-                onClick = {}
-            )
-            Spacer(Modifier.height(8.dp))
             ButtonOutline(
                 text = "Outline Enabled",
                 onClick = {}
             )
-            Spacer(Modifier.height(8.dp))
-
+            Spacer(modifier = Modifier.height(8.dp))
+            ButtonOutline(
+                text = "Outline Loading",
+                onClick = {}
+            )
+            Spacer(modifier = Modifier.height(8.dp))
             ButtonOutline(
                 text = "Outline Disabled",
                 onClick = {}
