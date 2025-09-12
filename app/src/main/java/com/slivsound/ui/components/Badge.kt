@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.slivsound.ui.theme.SlivsoundTheme
 
 @Composable
-fun BadgePillTransparent(
+fun Badge(
     text: String = "Badge",
     modifier: Modifier = Modifier,
     icon: ImageVector? = Icons.Outlined.Build,
@@ -71,7 +71,7 @@ fun BadgePillTransparent(
 fun BadgeLabelPreview() {
     SlivsoundTheme {
         Box(Modifier.padding(16.dp)) {
-            BadgePillTransparent( text = "Badge")
+            Badge( text = "Badge")
         }
     }
 }
