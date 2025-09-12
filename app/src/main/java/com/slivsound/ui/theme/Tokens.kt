@@ -1,4 +1,4 @@
-package com.slivsound.ui.components.base
+package com.slivsound.ui.theme
 
 import androidx.compose.ui.unit.dp
 

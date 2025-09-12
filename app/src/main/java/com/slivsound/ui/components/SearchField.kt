@@ -1,4 +1,4 @@
-package com.slivsound.ui.components.search
+package com.slivsound.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -10,8 +10,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
+import com.slivsound.ui.theme.SlivsoundTheme
 
 @Composable
 fun SearchField(
@@ -40,4 +46,17 @@ fun SearchField(
             onSearch = { onSearch() }
         )
     )
+}
+@Preview(showBackground = true)
+@Composable
+fun SearchPreview() {
+    var query by remember { mutableStateOf("") }
+
+    SlivsoundTheme {
+        SearchField(
+            value = query,
+            onValueChange = { query = it },
+            onSearch = { println("Search: $query") }
+        )
+    }
 }

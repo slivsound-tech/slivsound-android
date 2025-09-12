@@ -29,19 +29,14 @@ private val LightColors = lightColorScheme(
 private val DarkColors = darkColorScheme(
     primary = Primary,
     onPrimary = Black,
-
     secondary = Secondary,
     onSecondary = Black,
-
     background = Background,
     onBackground = TextPrimary,
-
     surface = SurfaceVariant,
     onSurface = TextPrimary,
-
     surfaceVariant = Surface,
     outline = BorderDivider,
-
     error = Error,
     onError = White
 )
@@ -49,22 +44,14 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun SlivsoundTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme: ColorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColors
-        else -> LightColors
-    }
+    val colorScheme = if (darkTheme) DarkColors else LightColors
 
     MaterialTheme(
         colorScheme = colorScheme,
         typography = AppTypography,
+        shapes = AppShapes,
         content = content
     )
 }

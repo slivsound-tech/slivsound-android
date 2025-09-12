@@ -1,5 +1,6 @@
-package com.slivsound.ui.components.card
+package com.slivsound.ui.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -8,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.slivsound.ui.theme.SlivsoundTheme
 
 @Composable
 fun CardView(
@@ -21,7 +24,7 @@ fun CardView(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         onClick = { onClick?.invoke() }
@@ -44,4 +47,19 @@ fun CardView(
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun CardPreview() {
+    SlivsoundTheme {
+        Box() {
+         CardView(
+             title = "",
+             onClick = {}
+         )
+        }
+    }
+}
+
+
 

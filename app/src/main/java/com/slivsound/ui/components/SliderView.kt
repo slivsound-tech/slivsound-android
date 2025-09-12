@@ -1,4 +1,4 @@
-package com.slivsound.ui.components.slider
+package com.slivsound.ui.components
 
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable

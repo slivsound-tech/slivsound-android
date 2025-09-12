@@ -1,4 +1,4 @@
-package com.slivsound.ui.components.button.outlineButton
+package com.slivsound.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Row
@@ -13,7 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.slivsound.ui.theme.SlivsoundTheme
 
 @Composable
 fun ButtonOutline(
@@ -49,5 +51,42 @@ fun ButtonOutline(
                 Text(text, style = MaterialTheme.typography.labelLarge)
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlineButtonEnabledPreview() {
+
+    SlivsoundTheme {
+        ButtonOutline(
+            text = "Outline Enabled",
+            onClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlineButtonLoadingPreview() {
+
+    SlivsoundTheme {
+        ButtonOutline(
+            text = "Outline Loading",
+            onClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlineButtonDisabledPreview() {
+
+    SlivsoundTheme {
+
+        ButtonOutline(
+            text = "Outline Disabled",
+            onClick = {}
+        )
     }
 }
