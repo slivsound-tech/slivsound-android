@@ -17,11 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SlivsoundTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NameScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                SlivsoundApp()
             }
         }
     }
