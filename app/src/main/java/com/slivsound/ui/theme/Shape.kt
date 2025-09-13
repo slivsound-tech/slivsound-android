@@ -10,4 +10,4 @@ val AppShapes = Shapes(
     medium = RoundedCornerShape(12.dp),
     large = RoundedCornerShape(16.dp),
     extraLarge = RoundedCornerShape(20.dp),
-    )
+)

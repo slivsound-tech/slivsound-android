@@ -22,6 +22,7 @@ import com.slivsound.ui.theme.SlivsoundTheme
 @Composable
 fun SearchField(
     value: String,
+    placeholder: String? = null,
     onValueChange: (String) -> Unit,
     onSearch: () -> Unit,
     modifier: Modifier = Modifier
@@ -29,7 +30,7 @@ fun SearchField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        placeholder = { Text("Поиск…") },
+        placeholder = { if (placeholder != null) Text(placeholder) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
@@ -47,6 +48,7 @@ fun SearchField(
         )
     )
 }
+
 @Preview(showBackground = true)
 @Composable
 fun SearchPreview() {
@@ -55,6 +57,19 @@ fun SearchPreview() {
     SlivsoundTheme {
         SearchField(
             value = query,
+            onValueChange = { query = it },
+            onSearch = { println("Search: $query") }
+        )
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun SearchV2Preview() {
+    var query by remember { mutableStateOf("") }
+    SlivsoundTheme {
+        SearchField(
+            value = query,
+            placeholder = "Search",
             onValueChange = { query = it },
             onSearch = { println("Search: $query") }
         )
