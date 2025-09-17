@@ -1,6 +1,7 @@
 package com.slivsound.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -315,6 +317,301 @@ fun PrimaryVectorTitleButtonLeftPreview() {
         )
     }
 }
+@Composable
+fun ButtonOutline(
+    modifier: Modifier = Modifier,
+    icon: ImageVector,
+    onClick: () -> Unit,
+) {
+    OutlineButtonView(
+        modifier = modifier,
+        onClick = onClick
+    ) {
+        Icon(
+            imageVector = icon,
+            tint = MaterialTheme.colorScheme.primary,
+
+            contentDescription = null,
+            modifier = Modifier.height(24.dp)
+        )
+    }
+}
+
+@Composable
+fun ButtonOutline(
+    modifier: Modifier = Modifier,
+    icon: Painter,
+    onClick: () -> Unit,
+) {
+    OutlineButtonView(
+        modifier = modifier,
+        onClick = onClick
+    ) {
+        Icon(
+            painter = icon,
+            tint = MaterialTheme.colorScheme.primary,
+            contentDescription = null,
+            modifier = Modifier.size(24.dp)
+        )
+    }
+}
+
+@Composable
+fun ButtonOutline(
+    modifier: Modifier = Modifier,
+    title: String,
+    onClick: () -> Unit,
+) {
+    OutlineButtonView(
+        modifier = modifier,
+        onClick = onClick
+    ) {
+        Text(
+            text = title,
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.titleMedium,
+        )
+    }
+}
+
+@Composable
+fun ButtonOutline(
+    modifier: Modifier = Modifier,
+    icon: ImageVector,
+    title: String,
+    onClick: () -> Unit,
+) {
+    OutlineButtonView(
+        modifier = modifier,
+        onClick = onClick
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = title,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
+
+                )
+            Spacer(modifier = Modifier.height(4.dp))
+            Icon(
+                imageVector = icon,
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun ButtonOutline(
+    modifier: Modifier = Modifier,
+    icon: Painter,
+    title: String,
+    onClick: () -> Unit,
+) {
+    OutlineButtonView(
+        modifier = modifier,
+        onClick = onClick
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = title,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Icon(
+                painter = icon,
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun OutlineButtonLeft(
+    modifier: Modifier = Modifier,
+    icon: Painter,
+    title: String,
+    onClick: () -> Unit,
+) {
+    OutlineButtonView(
+        modifier = modifier,
+        onClick = onClick
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+
+                painter = icon,
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = title,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
+
+                )
+
+        }
+    }
+}
+
+@Composable
+fun OutlineButtonLeft(
+    modifier: Modifier = Modifier,
+    icon: ImageVector,
+    title: String,
+    onClick: () -> Unit,
+) {
+    OutlineButtonView(
+        modifier = modifier,
+        onClick = onClick
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                imageVector = icon,
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = title,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
+
+                )
+
+        }
+    }
+}
+
+@Composable
+fun OutlineButtonView(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    content: @Composable RowScope.() -> Unit
+) {
+    Box(
+        modifier = modifier
+            .height(48.dp)
+            .width(175.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .clickable(onClick = onClick)
+            .background(Color.Transparent)
+            .border(
+                width = 2.5.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.medium
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Row() {
+
+            content()
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlineVectorButtonPreview() {
+    SlivsoundTheme {
+        ButtonOutline(
+            icon = Icons.Default.CheckCircle,
+            onClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlinePainterButtonPreview() {
+    SlivsoundTheme {
+        ButtonOutline(
+            icon = painterResource(R.drawable.right_1),
+            onClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlineVectorTitleButtonPreview() {
+    SlivsoundTheme {
+        ButtonOutline(
+            title = "Continue",
+            icon = Icons.Default.CheckCircle,
+            onClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlinePainterTitleButtonPreview() {
+    SlivsoundTheme {
+        ButtonOutline(
+            title = "Continue",
+            icon = painterResource(R.drawable.right_1),
+            onClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlineTitleButtonPreview() {
+    SlivsoundTheme {
+        ButtonOutline(
+            title = "Continue",
+            onClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlinePainterTitleButtonLeftPreview() {
+    SlivsoundTheme {
+        OutlineButtonLeft(
+            title = "Continue",
+            icon = painterResource(R.drawable.left_1),
+            onClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OutlineVectorTitleButtonLeftPreview() {
+    SlivsoundTheme {
+        OutlineButtonLeft(
+            title = "Continue",
+            icon = Icons.Default.CheckCircle,
+            onClick = {}
+        )
+    }
+}
+
 
 
 
