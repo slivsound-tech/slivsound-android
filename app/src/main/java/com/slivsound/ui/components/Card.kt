@@ -2,6 +2,7 @@ package com.slivsound.ui.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CardDefaults
@@ -20,15 +21,14 @@ fun Card(
 
     androidx.compose.material3.Card(
         modifier = modifier
-            .height(60.dp)
-            .width(390.dp)
+            .fillMaxWidth()
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outline,
-                shape = MaterialTheme.shapes.extraSmall
+                shape = MaterialTheme.shapes.medium
             ),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        shape = MaterialTheme.shapes.extraSmall
+        shape = MaterialTheme.shapes.medium
     )
     {
         content()
@@ -39,7 +39,8 @@ fun Card(
 @Composable
 fun CardPreview() {
     SlivsoundTheme() {
-        Card {
+        Card(modifier = Modifier.height(200.dp)) {
+
         }
     }
 }

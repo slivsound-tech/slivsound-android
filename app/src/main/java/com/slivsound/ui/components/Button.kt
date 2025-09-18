@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -25,6 +27,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.slivsound.R
 import com.slivsound.ui.theme.SlivsoundTheme
@@ -33,10 +36,12 @@ import com.slivsound.ui.theme.SlivsoundTheme
 fun Button(
     modifier: Modifier = Modifier,
     icon: ImageVector,
+    size: ButtonSize = ButtonSize.Large,
     onClick: () -> Unit,
 ) {
     ButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Icon(
@@ -51,11 +56,13 @@ fun Button(
 @Composable
 fun Button(
     modifier: Modifier = Modifier,
+    size: ButtonSize = ButtonSize.Large,
     icon: Painter,
     onClick: () -> Unit,
 ) {
     ButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Icon(
@@ -71,10 +78,12 @@ fun Button(
 fun Button(
     modifier: Modifier = Modifier,
     title: String,
+    size: ButtonSize = ButtonSize.Large,
     onClick: () -> Unit,
 ) {
     ButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Text(
@@ -90,11 +99,13 @@ fun Button(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     title: String,
+    size: ButtonSize = ButtonSize.Large,
     onClick: () -> Unit,
 ) {
     ButtonView(
         modifier = modifier,
-        onClick = onClick
+        onClick = onClick,
+        size = size
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -120,12 +131,14 @@ fun Button(
 @Composable
 fun Button(
     modifier: Modifier = Modifier,
+    size: ButtonSize = ButtonSize.Large,
     icon: Painter,
     title: String,
     onClick: () -> Unit,
 ) {
     ButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Row(
@@ -137,7 +150,7 @@ fun Button(
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.titleMedium,
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             Icon(
                 painter = icon,
                 tint = MaterialTheme.colorScheme.onPrimary,
@@ -151,12 +164,14 @@ fun Button(
 @Composable
 fun ButtonLeft(
     modifier: Modifier = Modifier,
+    size: ButtonSize = ButtonSize.Large,
     icon: Painter,
     title: String,
     onClick: () -> Unit,
 ) {
     ButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Row(
@@ -170,7 +185,7 @@ fun ButtonLeft(
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.onPrimary,
@@ -185,12 +200,14 @@ fun ButtonLeft(
 @Composable
 fun ButtonLeft(
     modifier: Modifier = Modifier,
+    size: ButtonSize = ButtonSize.Large,
     icon: ImageVector,
     title: String,
     onClick: () -> Unit,
 ) {
     ButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Row(
@@ -203,7 +220,7 @@ fun ButtonLeft(
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.onPrimary,
@@ -215,23 +232,29 @@ fun ButtonLeft(
     }
 }
 
+enum class ButtonSize(val padding: Dp) {
+    Large(12.dp),
+    Medium(8.dp),
+    Small(4.dp)
+}
+
 @Composable
-fun ButtonView(
+private fun ButtonView(
     modifier: Modifier = Modifier,
+    size: ButtonSize,
     onClick: () -> Unit,
     content: @Composable RowScope.() -> Unit
 ) {
     Box(
         modifier = modifier
-            .height(48.dp)
-            .width(175.dp)
+            .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
             .clickable(onClick = onClick)
-            .background(MaterialTheme.colorScheme.primary),
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(horizontal = size.padding, vertical = size.padding),
         contentAlignment = Alignment.Center
     ) {
         Row() {
-
             content()
         }
     }
@@ -317,6 +340,7 @@ fun PrimaryVectorTitleButtonLeftPreview() {
         )
     }
 }
+
 @Composable
 fun ButtonOutline(
     modifier: Modifier = Modifier,

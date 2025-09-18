@@ -13,7 +13,7 @@ val Primary = Color(0xFFA889E6)
 val OnPrimary = Color(0xFFFFFFFF)
 
 val ContentPrimary = Color(0xFFF6F1EB)
-
+val OnSurface = Color(0xFFC7C2D7)
 
 val ContentSecondary = Color(0xFFB7BBC9)
 val Outline = Color(0xFF44475C)
