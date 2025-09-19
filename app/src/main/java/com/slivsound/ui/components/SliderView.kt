@@ -1,12 +1,12 @@
 package com.slivsound.ui.components
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderColors
 import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.SliderPositions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -18,38 +18,38 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SliderView(
+    modifier: Modifier = Modifier,
     value: Float,
     onValueChange: (Float) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
+    val activePurple = MaterialTheme.colorScheme.primary
+    val inactiveGray = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.24f)
 
-    val colors = SliderColors(
-        thumbColor = Color(0xFF1611680),
-        activeTrackColor = Color(0xFF1611680),
-        activeTickColor = Color(0xFF1611680),
-        inactiveTrackColor = Color(0xFF1611680),
-        inactiveTickColor = Color(0xFF1611680),
-        disabledThumbColor = Color(0xFF1611680),
-        disabledActiveTrackColor = Color(0xFF1611680),
-        disabledActiveTickColor = Color(0xFF1611680),
-        disabledInactiveTrackColor = Color(0xFF1611680),
-        disabledInactiveTickColor = Color(0xFF1611680),
+    val colors = SliderDefaults.colors(
+        thumbColor = Color.White,
+        activeTrackColor = activePurple,
+        inactiveTrackColor = inactiveGray,
+        disabledThumbColor = Color.LightGray,
+        disabledActiveTrackColor = activePurple.copy(alpha = 0.38f),
+        disabledInactiveTrackColor = inactiveGray.copy(alpha = 0.38f)
     )
 
     Slider(
         value = value,
         onValueChange = onValueChange,
         valueRange = 0f..100f,
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
+        interactionSource = interactionSource,
         colors = colors,
         track = { sliderState ->
-            SliderDefaults.Track(
-                colors = colors,
-                enabled = true,
-                sliderState = sliderState,
-                modifier = Modifier.height(2.dp)
-            )
+            SliderDefaults
+                .Track(
+                    sliderState = sliderState,
+                    enabled = true,
+                    colors = colors,
+                    modifier = Modifier.height(6.dp)
+                )
         },
         thumb = {
             SliderDefaults.Thumb(
@@ -57,7 +57,7 @@ fun SliderView(
                 colors = colors,
                 thumbSize = DpSize(20.dp, 20.dp)
             )
-        },
+        }
     )
 }
 

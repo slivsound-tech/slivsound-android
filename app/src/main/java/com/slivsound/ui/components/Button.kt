@@ -117,7 +117,7 @@ fun Button(
                 style = MaterialTheme.typography.titleMedium,
 
                 )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             Icon(
                 imageVector = icon,
                 tint = MaterialTheme.colorScheme.onPrimary,
@@ -235,7 +235,7 @@ fun ButtonLeft(
 enum class ButtonSize(val padding: Dp) {
     Large(12.dp),
     Medium(8.dp),
-    Small(4.dp)
+    Small(4.dp),
 }
 
 @Composable
@@ -345,19 +345,25 @@ fun PrimaryVectorTitleButtonLeftPreview() {
 fun ButtonOutline(
     modifier: Modifier = Modifier,
     icon: ImageVector,
+    size: ButtonSize = ButtonSize.Large,
     onClick: () -> Unit,
 ) {
     OutlineButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
-        Icon(
-            imageVector = icon,
-            tint = MaterialTheme.colorScheme.primary,
-
-            contentDescription = null,
-            modifier = Modifier.height(24.dp)
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                imageVector = icon,
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = null,
+                modifier = Modifier.height(24.dp)
+            )
+        }
     }
 }
 
@@ -365,10 +371,12 @@ fun ButtonOutline(
 fun ButtonOutline(
     modifier: Modifier = Modifier,
     icon: Painter,
+    size: ButtonSize = ButtonSize.Small,
     onClick: () -> Unit,
 ) {
     OutlineButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Icon(
@@ -384,10 +392,12 @@ fun ButtonOutline(
 fun ButtonOutline(
     modifier: Modifier = Modifier,
     title: String,
+    size: ButtonSize = ButtonSize.Medium,
     onClick: () -> Unit,
 ) {
     OutlineButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Text(
@@ -403,10 +413,12 @@ fun ButtonOutline(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     title: String,
+    size: ButtonSize = ButtonSize.Large,
     onClick: () -> Unit,
 ) {
     OutlineButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Row(
@@ -419,7 +431,7 @@ fun ButtonOutline(
                 style = MaterialTheme.typography.titleMedium,
 
                 )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             Icon(
                 imageVector = icon,
                 tint = MaterialTheme.colorScheme.primary,
@@ -435,10 +447,12 @@ fun ButtonOutline(
     modifier: Modifier = Modifier,
     icon: Painter,
     title: String,
+    size: ButtonSize = ButtonSize.Large,
     onClick: () -> Unit,
 ) {
     OutlineButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Row(
@@ -450,7 +464,7 @@ fun ButtonOutline(
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.titleMedium,
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             Icon(
                 painter = icon,
                 tint = MaterialTheme.colorScheme.primary,
@@ -466,10 +480,12 @@ fun OutlineButtonLeft(
     modifier: Modifier = Modifier,
     icon: Painter,
     title: String,
+    size: ButtonSize = ButtonSize.Large,
     onClick: () -> Unit,
 ) {
     OutlineButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Row(
@@ -483,7 +499,7 @@ fun OutlineButtonLeft(
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.primary,
@@ -498,12 +514,14 @@ fun OutlineButtonLeft(
 @Composable
 fun OutlineButtonLeft(
     modifier: Modifier = Modifier,
+    size: ButtonSize = ButtonSize.Large,
     icon: ImageVector,
     title: String,
     onClick: () -> Unit,
 ) {
     OutlineButtonView(
         modifier = modifier,
+        size = size,
         onClick = onClick
     ) {
         Row(
@@ -516,7 +534,7 @@ fun OutlineButtonLeft(
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.primary,
@@ -531,13 +549,13 @@ fun OutlineButtonLeft(
 @Composable
 fun OutlineButtonView(
     modifier: Modifier = Modifier,
+    size: ButtonSize,
     onClick: () -> Unit,
     content: @Composable RowScope.() -> Unit
 ) {
     Box(
         modifier = modifier
-            .height(48.dp)
-            .width(175.dp)
+            .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
             .clickable(onClick = onClick)
             .background(Color.Transparent)
@@ -545,7 +563,8 @@ fun OutlineButtonView(
                 width = 2.5.dp,
                 color = MaterialTheme.colorScheme.primary,
                 shape = MaterialTheme.shapes.medium
-            ),
+            )
+            .padding(horizontal = size.padding, vertical = size.padding),
         contentAlignment = Alignment.Center
     ) {
         Row() {
