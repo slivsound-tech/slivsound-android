@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -17,7 +16,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SliderView(
+fun Slider(
     modifier: Modifier = Modifier,
     value: Float,
     onValueChange: (Float) -> Unit,
@@ -35,7 +34,7 @@ fun SliderView(
         disabledInactiveTrackColor = inactiveGray.copy(alpha = 0.38f)
     )
 
-    Slider(
+    androidx.compose.material3.Slider(
         value = value,
         onValueChange = onValueChange,
         valueRange = 0f..100f,
@@ -48,14 +47,14 @@ fun SliderView(
                     sliderState = sliderState,
                     enabled = true,
                     colors = colors,
-                    modifier = Modifier.height(6.dp)
+                    modifier = Modifier.height(2.dp)
                 )
         },
         thumb = {
             SliderDefaults.Thumb(
                 interactionSource = interactionSource,
                 colors = colors,
-                thumbSize = DpSize(20.dp, 20.dp)
+                thumbSize = DpSize(15.dp, 15.dp)
             )
         }
     )
@@ -64,7 +63,7 @@ fun SliderView(
 @Preview(showBackground = true)
 @Composable
 fun SliderPreview() {
-    SliderView(
+    Slider(
         value = 50f,
         onValueChange = {}
     )

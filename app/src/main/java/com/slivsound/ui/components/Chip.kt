@@ -39,8 +39,8 @@ import com.slivsound.ui.theme.SlivsoundTheme
 fun Chip(
     modifier: Modifier = Modifier,
     icon: ImageVector,
-    size: ChipSize = ChipSize.Large,
     selected: Boolean,
+    size: ChipSize = ChipSize.Large,
     onSelectedChange: (Boolean) -> Unit,
     onClick: () -> Unit,
 ) {
@@ -427,7 +427,7 @@ fun Preview_Chip_Title_PainterRight() {
 
 @Preview(showBackground = true, name = "ChipLeft • Painter (left)")
 @Composable
-fun Preview_ChipLeft_Painter() {
+fun PreviewChipLeftPainter() {
     SlivsoundTheme {
         var selected by remember { mutableStateOf(true) }
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {

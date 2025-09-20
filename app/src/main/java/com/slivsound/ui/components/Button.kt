@@ -97,112 +97,55 @@ fun Button(
 @Composable
 fun Button(
     modifier: Modifier = Modifier,
-    icon: ImageVector,
     title: String,
+    icon: Painter,
+    iconPlacement: IconPlacement = IconPlacement.Left,
     size: ButtonSize = ButtonSize.Large,
     onClick: () -> Unit,
 ) {
     ButtonView(
         modifier = modifier,
-        onClick = onClick,
-        size = size
+        size = size,
+        onClick = onClick
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
+            if (iconPlacement == IconPlacement.Left) {
+                Icon(
+                    painter = icon,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+            Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleMedium,
-
-                )
-            Spacer(modifier = Modifier.width(4.dp))
-            Icon(
-                imageVector = icon,
-                tint = MaterialTheme.colorScheme.onPrimary,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
+                style = MaterialTheme.typography.titleMedium
             )
+            if (iconPlacement == IconPlacement.Right) {
+                Icon(
+                    painter = icon,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
+
     }
 }
 
 @Composable
 fun Button(
     modifier: Modifier = Modifier,
-    size: ButtonSize = ButtonSize.Large,
-    icon: Painter,
     title: String,
-    onClick: () -> Unit,
-) {
-    ButtonView(
-        modifier = modifier,
-        size = size,
-        onClick = onClick
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = title,
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Icon(
-                painter = icon,
-                tint = MaterialTheme.colorScheme.onPrimary,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-        }
-    }
-}
-
-@Composable
-fun ButtonLeft(
-    modifier: Modifier = Modifier,
-    size: ButtonSize = ButtonSize.Large,
-    icon: Painter,
-    title: String,
-    onClick: () -> Unit,
-) {
-    ButtonView(
-        modifier = modifier,
-        size = size,
-        onClick = onClick
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Icon(
-
-                painter = icon,
-                tint = MaterialTheme.colorScheme.onPrimary,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(
-                text = title,
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleMedium,
-
-                )
-
-        }
-    }
-}
-
-@Composable
-fun ButtonLeft(
-    modifier: Modifier = Modifier,
-    size: ButtonSize = ButtonSize.Large,
     icon: ImageVector,
-    title: String,
+    iconPlacement: IconPlacement = IconPlacement.Left,
+    size: ButtonSize = ButtonSize.Large,
     onClick: () -> Unit,
 ) {
     ButtonView(
@@ -214,22 +157,35 @@ fun ButtonLeft(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Icon(
-                imageVector = icon,
-                tint = MaterialTheme.colorScheme.onPrimary,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(4.dp))
+            if (iconPlacement == IconPlacement.Left) {
+                Icon(
+                    imageVector = icon,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+            }
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleMedium,
-
+                style = MaterialTheme.typography.titleMedium
+            )
+            if (iconPlacement == IconPlacement.Right) {
+                Spacer(modifier = Modifier.width(4.dp))
+                Icon(
+                    imageVector = icon,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
                 )
-
+            }
         }
     }
+}
+
+enum class IconPlacement {
+    Right, Left
 }
 
 enum class ButtonSize(val padding: Dp) {
@@ -321,9 +277,10 @@ fun PrimaryTitleButtonPreview() {
 @Composable
 fun PrimaryPainterTitleButtonLeftPreview() {
     SlivsoundTheme {
-        ButtonLeft(
+        Button(
             title = "Continue",
             icon = painterResource(R.drawable.left_1),
+            iconPlacement = IconPlacement.Left,
             onClick = {}
         )
     }
@@ -333,9 +290,10 @@ fun PrimaryPainterTitleButtonLeftPreview() {
 @Composable
 fun PrimaryVectorTitleButtonLeftPreview() {
     SlivsoundTheme {
-        ButtonLeft(
+        Button(
             title = "Continue",
             icon = Icons.Default.CheckCircle,
+            iconPlacement = IconPlacement.Left,
             onClick = {}
         )
     }

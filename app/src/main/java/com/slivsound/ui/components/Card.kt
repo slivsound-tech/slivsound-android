@@ -18,7 +18,6 @@ fun Card(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
-
     androidx.compose.material3.Card(
         modifier = modifier
             .fillMaxWidth()
@@ -29,8 +28,7 @@ fun Card(
             ),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = MaterialTheme.shapes.medium
-    )
-    {
+    ) {
         content()
     }
 }
