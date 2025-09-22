@@ -1,6 +1,7 @@
 package com.slivsound.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.slivsound.R
 import com.slivsound.ui.theme.SlivsoundTheme
 
@@ -33,19 +35,21 @@ fun SearchField(
         onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.bodyLarge,
         placeholder = {
-            if (placeholder != null) Text(placeholder)
+            if (placeholder != null)
+                Text(
+                    text = placeholder
+                )
         },
-
         leadingIcon = {
             Icon(
-                painter = painterResource(R.drawable.search_1),
+                painter = painterResource(R.drawable.ic_search),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurface
+                tint = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.size(24.dp)
             )
         },
         singleLine = true,
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         colors = TextFieldDefaults.colors(
 
