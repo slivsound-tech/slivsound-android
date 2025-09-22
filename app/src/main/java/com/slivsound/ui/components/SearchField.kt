@@ -31,6 +31,7 @@ fun SearchField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
+        textStyle = MaterialTheme.typography.bodyLarge,
         placeholder = {
             if (placeholder != null) Text(placeholder)
         },
@@ -47,11 +48,18 @@ fun SearchField(
             .fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         colors = TextFieldDefaults.colors(
+
             focusedContainerColor = MaterialTheme.colorScheme.surface,
             unfocusedContainerColor = MaterialTheme.colorScheme.surface,
             disabledContainerColor = MaterialTheme.colorScheme.surface,
             errorContainerColor = MaterialTheme.colorScheme.surface,
-        ),
+
+            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface,
+            disabledPlaceholderColor = MaterialTheme.colorScheme.onSurface,
+            errorPlaceholderColor = MaterialTheme.colorScheme.onSurface,
+
+            ),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Search
         ),
