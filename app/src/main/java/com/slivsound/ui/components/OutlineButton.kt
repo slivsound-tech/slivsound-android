@@ -1,4 +1,4 @@
-package com.slivsound.ui.components.Button
+package com.slivsound.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -97,8 +97,6 @@ fun ButtonOutline(
     }
 }
 
-enum class OutlineIconSide { Left, Right }
-
 @Composable
 fun OutlineButton(
     modifier: Modifier = Modifier,
@@ -196,6 +194,7 @@ fun OutlineButton(
     }
 }
 
+enum class OutlineIconSide { Left, Right }
 
 enum class OutlineButtonSize(val padding: Dp) {
     Large(12.dp),

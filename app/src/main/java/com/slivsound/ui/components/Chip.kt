@@ -110,8 +110,6 @@ fun Chip(
     }
 }
 
-enum class IconSide { Left, Right }
-
 @Composable
 fun Chip(
     modifier: Modifier = Modifier,
@@ -120,7 +118,7 @@ fun Chip(
     size: ChipSize = ChipSize.Large,
     selected: Boolean,
     onSelectedChange: (Boolean) -> Unit,
-    iconSide: IconSide = IconSide.Left,
+    chipIconSide: ChipIconSide = ChipIconSide.Left,
     onClick: () -> Unit,
 ) {
     ChipView(
@@ -131,7 +129,7 @@ fun Chip(
         onClick = onClick
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            if (iconSide == IconSide.Left) {
+            if (chipIconSide == ChipIconSide.Left) {
                 Icon(
                     imageVector = icon,
                     tint = if (selected) MaterialTheme.colorScheme.onPrimary
@@ -150,7 +148,7 @@ fun Chip(
             )
             Spacer(Modifier.width(4.dp))
 
-            if (iconSide == IconSide.Right) {
+            if (chipIconSide == ChipIconSide.Right) {
                 Icon(
                     imageVector = icon,
                     tint = if (selected) MaterialTheme.colorScheme.onPrimary
@@ -171,7 +169,7 @@ fun Chip(
     size: ChipSize = ChipSize.Large,
     selected: Boolean,
     onSelectedChange: (Boolean) -> Unit,
-    iconSide: IconSide = IconSide.Right,
+    chipIconSide: ChipIconSide = ChipIconSide.Right,
     onClick: () -> Unit,
 ) {
     ChipView(
@@ -182,7 +180,7 @@ fun Chip(
         onClick = onClick
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            if (iconSide == IconSide.Right) {
+            if (chipIconSide == ChipIconSide.Right) {
                 Text(
                     text = title,
                     color = if (selected) MaterialTheme.colorScheme.onPrimary
@@ -199,7 +197,7 @@ fun Chip(
                 modifier = Modifier.size(24.dp)
             )
             Spacer(Modifier.width(4.dp))
-            if (iconSide == IconSide.Left) {
+            if (chipIconSide == ChipIconSide.Left) {
                 Text(
                     text = title,
                     color = if (selected) MaterialTheme.colorScheme.onPrimary
@@ -210,6 +208,8 @@ fun Chip(
         }
     }
 }
+
+enum class ChipIconSide { Left, Right }
 
 enum class ChipSize(val padding: Dp) {
     Large(12.dp),
@@ -345,7 +345,7 @@ fun PreviewChipTitleVectorRight() {
         var selected by remember { mutableStateOf(true) }
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Chip(
-                iconSide = IconSide.Left,
+                chipIconSide = ChipIconSide.Left,
                 icon = Icons.Default.CheckCircle,
                 title = "Continue",
                 size = ChipSize.Large,
@@ -354,7 +354,7 @@ fun PreviewChipTitleVectorRight() {
                 onClick = {}
             )
             Chip(
-                iconSide = IconSide.Right,
+                chipIconSide = ChipIconSide.Right,
                 icon = Icons.Default.CheckCircle,
                 title = "Continue",
                 size = ChipSize.Medium,
@@ -373,7 +373,7 @@ fun PreviewChipTitlePainterRight() {
         var selected by remember { mutableStateOf(false) }
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Chip(
-                iconSide = IconSide.Right,
+                chipIconSide = ChipIconSide.Right,
                 icon = painterResource(R.drawable.right_1),
                 title = "Continue",
                 size = ChipSize.Large,
@@ -382,7 +382,7 @@ fun PreviewChipTitlePainterRight() {
                 onClick = {}
             )
             Chip(
-                iconSide = IconSide.Left,
+                chipIconSide = ChipIconSide.Left,
                 icon = painterResource(R.drawable.left_1),
                 title = "Continue",
                 size = ChipSize.Small,

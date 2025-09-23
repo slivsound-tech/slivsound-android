@@ -1,5 +1,4 @@
-package com.slivsound.ui.components.Button
-
+package com.slivsound.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -91,7 +90,6 @@ fun Button(
     }
 }
 
-enum class IconSide { Left, Right }
 @Composable
 fun Button(
     modifier: Modifier = Modifier,
@@ -186,6 +184,8 @@ fun Button(
         }
     }
 }
+
+enum class IconSide { Left, Right }
 
 enum class ButtonSize(val padding: Dp) {
     Large(12.dp),
