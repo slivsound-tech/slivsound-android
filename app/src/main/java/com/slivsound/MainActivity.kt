@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -47,6 +48,13 @@ class MainActivity : ComponentActivity() {
                         val route = backStack?.destination?.route
                         val selected = MaterialTheme.colorScheme.primary
                         val unselected = MaterialTheme.colorScheme.onSurfaceVariant
+                        val ItemDefaultsColors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = selected,
+                            selectedTextColor = selected,
+                            unselectedIconColor = unselected,
+                            unselectedTextColor = unselected,
+                            indicatorColor = Color.Transparent
+                        )
 
                         NavigationBar(
                             containerColor = MaterialTheme.colorScheme.surface,
@@ -62,14 +70,8 @@ class MainActivity : ComponentActivity() {
                                         contentDescription = null
                                     )
                                 },
-                                label = { Text("Discover") },
-                                colors = NavigationBarItemDefaults.colors(
-                                    selectedIconColor = selected,
-                                    selectedTextColor = selected,
-                                    unselectedIconColor = unselected,
-                                    unselectedTextColor = unselected,
-                                    indicatorColor = Color.Transparent
-                                )
+                                label = { Text(stringResource(R.string.tab_discover)) },
+                                colors = ItemDefaultsColors
                             )
 
                             NavigationBarItem(
@@ -81,14 +83,8 @@ class MainActivity : ComponentActivity() {
                                         contentDescription = null
                                     )
                                 },
-                                label = { Text("Sound") },
-                                colors = NavigationBarItemDefaults.colors(
-                                    selectedIconColor = selected,
-                                    selectedTextColor = selected,
-                                    unselectedIconColor = unselected,
-                                    unselectedTextColor = unselected,
-                                    indicatorColor = Color.Transparent
-                                )
+                                label = { Text(stringResource(R.string.tab_sound)) },
+                                colors = ItemDefaultsColors
                             )
                             NavigationBarItem(
                                 selected = route?.startsWith("settings") == true,
@@ -99,14 +95,8 @@ class MainActivity : ComponentActivity() {
                                         contentDescription = null
                                     )
                                 },
-                                label = { Text("Settings") },
-                                colors = NavigationBarItemDefaults.colors(
-                                    selectedIconColor = selected,
-                                    selectedTextColor = selected,
-                                    unselectedIconColor = unselected,
-                                    unselectedTextColor = unselected,
-                                    indicatorColor = Color.Transparent
-                                )
+                                label = { Text(stringResource(R.string.tab_settings)) },
+                                colors = ItemDefaultsColors
                             )
                         }
                     }
