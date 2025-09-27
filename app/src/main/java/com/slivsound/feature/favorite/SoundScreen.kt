@@ -5,6 +5,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun FavoriteScreen() {
-    Text(text = "Fevorite", style = MaterialTheme.typography.headlineMedium)
+fun SoundScreen() {
+    Text(text = "Sound", style = MaterialTheme.typography.headlineMedium)
 }
