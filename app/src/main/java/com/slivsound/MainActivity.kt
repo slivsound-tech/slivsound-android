@@ -46,56 +46,84 @@ class MainActivity : ComponentActivity() {
                     bottomBar = {
                         val backStack by navController.currentBackStackEntryAsState()
                         val route = backStack?.destination?.route
-                        val selected = MaterialTheme.colorScheme.primary
-                        val unselected = MaterialTheme.colorScheme.onSurfaceVariant
+                        val selectedColor = MaterialTheme.colorScheme.primary
+                        val unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
+
                         val defaultsColors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = selected,
-                            selectedTextColor = selected,
-                            unselectedIconColor = unselected,
-                            unselectedTextColor = unselected,
+                            selectedIconColor = selectedColor,
+                            selectedTextColor = selectedColor,
+                            unselectedIconColor = unselectedColor,
+                            unselectedTextColor = unselectedColor,
                             indicatorColor = Color.Transparent
                         )
 
                         NavigationBar(
                             containerColor = MaterialTheme.colorScheme.surface,
-                            contentColor = MaterialTheme.colorScheme.surface,
                             tonalElevation = 0.dp
                         ) {
+
+                            val discoverSelected = route?.startsWith(GRAPH_DISCOVER) == true
                             NavigationBarItem(
-                                selected = route?.startsWith(GRAPH_DISCOVER) == true,
+                                selected = discoverSelected,
                                 onClick = { navController.navigate(GRAPH_DISCOVER) },
                                 icon = {
                                     Icon(
-                                        painterResource(R.drawable.ic_search),
-                                        contentDescription = null
+                                        painter = painterResource(
+                                            if (discoverSelected) R.drawable.ic_search_filled
+                                            else R.drawable.ic_search
+                                        ),
+                                        contentDescription = stringResource(R.string.tab_discover)
                                     )
                                 },
-                                label = { Text(stringResource(R.string.tab_discover)) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.tab_discover),
+                                        style = MaterialTheme.typography.labelMedium
+                                    )
+                                },
                                 colors = defaultsColors
                             )
-
+                            val soundSelected = route?.startsWith(GRAPH_SOUND) == true
                             NavigationBarItem(
-                                selected = route?.startsWith(GRAPH_SOUND) == true,
+                                selected = soundSelected,
                                 onClick = { navController.navigate(GRAPH_SOUND) },
                                 icon = {
                                     Icon(
-                                        painterResource(R.drawable.ic_sound),
-                                        contentDescription = null
+                                        painter = painterResource(
+                                            if (soundSelected) R.drawable.ic_sound_filled
+                                            else R.drawable.ic_sound
+                                        ),
+                                        contentDescription = stringResource(R.string.tab_sound)
                                     )
                                 },
-                                label = { Text(stringResource(R.string.tab_sound)) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.tab_sound),
+                                        style = MaterialTheme.typography.labelMedium
+                                    )
+                                },
                                 colors = defaultsColors
                             )
+
+                            val settingsSelected = route?.startsWith(GRAPH_SETTINGS) == true
                             NavigationBarItem(
-                                selected = route?.startsWith(GRAPH_SETTINGS) == true,
+                                selected = settingsSelected,
                                 onClick = { navController.navigate(GRAPH_SETTINGS) },
                                 icon = {
                                     Icon(
-                                        painterResource(R.drawable.ic_settings),
-                                        contentDescription = null
+                                        painter = painterResource(
+                                            if (settingsSelected) R.drawable.ic_settings_filled
+                                            else R.drawable.ic_settings
+                                        ),
+                                        contentDescription = stringResource(R.string.tab_settings)
                                     )
                                 },
-                                label = { Text(stringResource(R.string.tab_settings)) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.tab_settings),
+                                        style = MaterialTheme.typography.labelMedium
+                                    )
+                                },
                                 colors = defaultsColors
                             )
                         }
