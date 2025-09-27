@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             NavigationBarItem(
                                 selected = route?.startsWith(GRAPH_DISCOVER) == true,
-                                onClick = { navController.navigate("discover") },
+                                onClick = { navController.navigate(GRAPH_DISCOVER) },
                                 icon = {
                                     Icon(
                                         painterResource(R.drawable.ic_search),
@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
 
                             NavigationBarItem(
                                 selected = route?.startsWith(GRAPH_SOUND) == true,
-                                onClick = { navController.navigate("sound") },
+                                onClick = { navController.navigate(GRAPH_SOUND) },
                                 icon = {
                                     Icon(
                                         painterResource(R.drawable.ic_sound),
@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
                             )
                             NavigationBarItem(
                                 selected = route?.startsWith(GRAPH_SETTINGS) == true,
-                                onClick = { navController.navigate("settings") },
+                                onClick = { navController.navigate(GRAPH_SETTINGS) },
                                 icon = {
                                     Icon(
                                         painterResource(R.drawable.ic_settings),
