@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                         val route = backStack?.destination?.route
                         val selected = MaterialTheme.colorScheme.primary
                         val unselected = MaterialTheme.colorScheme.onSurfaceVariant
-                        val ItemDefaultsColors = NavigationBarItemDefaults.colors(
+                        val defaultsColors = NavigationBarItemDefaults.colors(
                             selectedIconColor = selected,
                             selectedTextColor = selected,
                             unselectedIconColor = unselected,
@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                             tonalElevation = 0.dp
                         ) {
                             NavigationBarItem(
-                                selected = route?.startsWith("discover") == true,
+                                selected = route?.startsWith(GRAPH_DISCOVER) == true,
                                 onClick = { navController.navigate("discover") },
                                 icon = {
                                     Icon(
@@ -71,11 +71,11 @@ class MainActivity : ComponentActivity() {
                                     )
                                 },
                                 label = { Text(stringResource(R.string.tab_discover)) },
-                                colors = ItemDefaultsColors
+                                colors = defaultsColors
                             )
 
                             NavigationBarItem(
-                                selected = route?.startsWith("sound") == true,
+                                selected = route?.startsWith(GRAPH_SOUND) == true,
                                 onClick = { navController.navigate("sound") },
                                 icon = {
                                     Icon(
@@ -84,10 +84,10 @@ class MainActivity : ComponentActivity() {
                                     )
                                 },
                                 label = { Text(stringResource(R.string.tab_sound)) },
-                                colors = ItemDefaultsColors
+                                colors = defaultsColors
                             )
                             NavigationBarItem(
-                                selected = route?.startsWith("settings") == true,
+                                selected = route?.startsWith(GRAPH_SETTINGS) == true,
                                 onClick = { navController.navigate("settings") },
                                 icon = {
                                     Icon(
@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                 },
                                 label = { Text(stringResource(R.string.tab_settings)) },
-                                colors = ItemDefaultsColors
+                                colors = defaultsColors
                             )
                         }
                     }
