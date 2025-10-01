@@ -1,4 +1,4 @@
-package com.slivsound.di
+package com.slivsound.onboarding.di
 
 import org.koin.ksp.generated.module
 import org.koin.core.annotation.ComponentScan

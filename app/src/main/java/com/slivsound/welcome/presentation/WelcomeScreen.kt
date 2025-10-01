@@ -1,23 +1,29 @@
 package com.slivsound.welcome.presentation
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.slivsound.featurename.presentation.NameEffect
-import com.slivsound.featurename.presentation.NameEvent
-import com.slivsound.featurename.presentation.NameState
-import com.slivsound.featurename.presentation.NameViewModel
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
+import com.slivsound.R
+import com.slivsound.ui.theme.SlivsoundTheme
+import com.slivsound.ui.theme.AppTypography
+import com.slivsound.ui.theme.OnBackground
+import com.slivsound.ui.theme.OnSurface
+import com.slivsound.ui.components.Button
+import com.slivsound.ui.components.IconSide
+import com.slivsound.ui.theme.SlivsoundTheme
+
 
 @Composable
 fun WelcomeScreen(
@@ -30,13 +36,8 @@ fun WelcomeScreen(
     LaunchedEffect(Unit) {
         viewModel.effects.collectLatest { effect ->
             when (effect) {
-                is NameEffect.ShowError -> {
-                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
-                }
-
-                is NameEffect.ShowToast -> {
-                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
-                }
+                is WelcomeEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                is WelcomeEffect.ShowError -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -44,10 +45,10 @@ fun WelcomeScreen(
     WelcomeView(
         modifier = modifier,
         state = state,
-        listener = object : NameClickListener {
+        listener = object : WelcomeClickListener {
             override fun onBack() {}
             override fun onTest() {
-                viewModel.onEvent(NameEvent.SetExample("Test Hello!"))
+                viewModel.onEvent(WelcomeEvent.SetWelcome("Hello from Welcome!"))
             }
         }
     )
@@ -55,43 +56,66 @@ fun WelcomeScreen(
 
 @Composable
 fun WelcomeView(
-    modifier: Modifier,
-    state: NameState,
-    listener: NameClickListener,
+    modifier: Modifier = Modifier,
+    state: WelcomeState = WelcomeState(),
+    listener: WelcomeClickListener = object : WelcomeClickListener {
+        override fun onBack() {}
+        override fun onTest() {}
+    }
 ) {
-    Column(
-        modifier = modifier.fillMaxSize()
-    ) {
-        Text(text = state.name)
-        Button(onClick = {
-            listener.onBack()
-        }) {
-            Text("Back")
-        }
-        Button(onClick = {
-            listener.onTest()
-        }) {
-            Text("Test")
+    Box(modifier = modifier.fillMaxSize()) {
+        // Фон
+        Image(
+            painter = painterResource(id = R.drawable.welocome), // сюда свою картинку
+            contentDescription = "Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        // Контент поверх фона
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Spacer(modifier = Modifier.height(433.dp))
+
+            Text(
+                text = state.message,
+                style = AppTypography.displayMedium, // шрифт из темы
+                color = OnBackground
+            )
+            Text(
+                text = state.message2,
+                style = AppTypography.bodyLarge, // шрифт из темы
+                color = OnSurface
+            )
+
+            Spacer(modifier = Modifier.height(100.dp))
+
+            SlivsoundTheme {
+                Button(
+                    iconSide = IconSide.Right,
+                    icon = painterResource(R.drawable.right_1),
+                    title = "Get Started",
+                    onClick = {}
+                )
+            }
+            // Моя кастомная кнопка с текстом "Continue"
+
         }
     }
 }
 
-interface NameClickListener {
+interface WelcomeClickListener {
     fun onBack()
     fun onTest()
 }
 
 @Preview(showBackground = true)
 @Composable
-fun NameViewPreview() {
-    NameView(
-        modifier = Modifier,
-        state = NameState(
-            name = "Test"
-        ),
-        listener = object : NameClickListener {
-            override fun onBack() {}
-            override fun onTest() {}
-        }
-    )
+fun WelcomeViewPreview() {
+    SlivsoundTheme {
+        WelcomeView()
+    }
 }
