@@ -1,4 +1,4 @@
-package com.slivsound.featurename.presentation
+package com.slivsound.welcome.presentation
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -12,13 +12,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.slivsound.featurename.presentation.NameEffect
+import com.slivsound.featurename.presentation.NameEvent
+import com.slivsound.featurename.presentation.NameState
+import com.slivsound.featurename.presentation.NameViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NameScreen(
+fun WelcomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: NameViewModel = koinViewModel()
+    viewModel: WelcomeViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
     val state by viewModel.state.collectAsState()
@@ -37,7 +41,7 @@ fun NameScreen(
         }
     }
 
-    NameView(
+    WelcomeView(
         modifier = modifier,
         state = state,
         listener = object : NameClickListener {
@@ -50,7 +54,7 @@ fun NameScreen(
 }
 
 @Composable
-fun NameView(
+fun WelcomeView(
     modifier: Modifier,
     state: NameState,
     listener: NameClickListener,
