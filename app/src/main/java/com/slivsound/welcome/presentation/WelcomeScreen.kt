@@ -3,14 +3,13 @@ package com.slivsound.welcome.presentation
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.collectLatest
@@ -21,9 +20,8 @@ import com.slivsound.ui.theme.AppTypography
 import com.slivsound.ui.theme.OnBackground
 import com.slivsound.ui.theme.OnSurface
 import com.slivsound.ui.components.Button
+import com.slivsound.ui.components.ButtonSize
 import com.slivsound.ui.components.IconSide
-import com.slivsound.ui.theme.SlivsoundTheme
-
 
 @Composable
 fun WelcomeScreen(
@@ -76,33 +74,34 @@ fun WelcomeView(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(16.dp,0.dp)
         ) {
             Spacer(modifier = Modifier.height(433.dp))
 
             Text(
-                text = state.message,
+                text = stringResource(R.string.welcome_text1),
                 style = AppTypography.displayMedium, // шрифт из темы
                 color = OnBackground
             )
+            Spacer(modifier = Modifier.height(24.dp))
+
             Text(
-                text = state.message2,
+                text = stringResource(R.string.welcome_text2),
                 style = AppTypography.bodyLarge, // шрифт из темы
                 color = OnSurface
             )
-
             Spacer(modifier = Modifier.height(100.dp))
 
-            SlivsoundTheme {
-                Button(
-                    iconSide = IconSide.Right,
-                    icon = painterResource(R.drawable.right_1),
-                    title = "Get Started",
-                    onClick = {}
-                )
-            }
-            // Моя кастомная кнопка с текстом "Continue"
 
+            Button(
+
+                size  = ButtonSize.Medium,
+                iconSide = IconSide.Right,
+                icon = painterResource(R.drawable.right_1), // если у тебя кастомный Button принимает painter
+                title = stringResource(R.string.welcome_button_text),
+                onClick = { listener.onTest() }
+
+            )
         }
     }
 }

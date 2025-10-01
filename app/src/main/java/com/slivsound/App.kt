@@ -1,10 +1,11 @@
 package com.slivsound.app
 
 import android.app.Application
+import com.slivsound.onboarding.di.appModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import com.slivsound.app.di.AppModules
+
 
 class App : Application() {
     override fun onCreate() {
