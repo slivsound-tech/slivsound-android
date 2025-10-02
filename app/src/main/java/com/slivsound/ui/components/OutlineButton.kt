@@ -251,7 +251,7 @@ fun OutlineVectorButtonPreview() {
 fun OutlinePainterButtonPreview() {
     SlivsoundTheme {
         ButtonOutline(
-            icon = painterResource(R.drawable.right_1),
+            icon = painterResource(R.drawable.ic_right),
             onClick = {}
         )
     }
@@ -274,7 +274,7 @@ fun OutlinePainterTitleButtonRightPreview() {
     SlivsoundTheme {
         OutlineButton(
             iconSide = OutlineIconSide.Right,
-            icon = painterResource(R.drawable.right_1),
+            icon = painterResource(R.drawable.ic_right),
             title = "Continue",
             onClick = {}
         )
@@ -300,7 +300,7 @@ fun OutlineVectorTitleButtonLeftPreview() {
 fun OutlinePainterTitleButtonLeftPreview() {
     SlivsoundTheme {
         OutlineButton(
-            icon = painterResource(R.drawable.left_1),
+            icon = painterResource(R.drawable.ic_left),
             title = "Continue",
             iconSide = OutlineIconSide.Left,
             onClick = {}
