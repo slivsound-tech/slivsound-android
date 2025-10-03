@@ -243,7 +243,7 @@ fun PrimaryVectorButtonPreview() {
 fun PrimaryPainterButtonPreview() {
     SlivsoundTheme {
         Button(
-            icon = painterResource(R.drawable.right_1),
+            icon = painterResource(R.drawable.ic_right),
             onClick = {}
         )
     }
@@ -276,7 +276,7 @@ fun PrimaryVectorTitleButtonPreview() {
 fun PrimaryPainterTitleButtonLeftPreview() {
     SlivsoundTheme {
         Button(
-            icon = painterResource(R.drawable.left_1),
+            icon = painterResource(R.drawable.ic_left),
             title = "Continue",
             iconSide = IconSide.Left,
             onClick = {}
@@ -289,7 +289,7 @@ fun PrimaryPainterTitleButtonRightPreview() {
     SlivsoundTheme {
         Button(
             iconSide = IconSide.Right,
-            icon = painterResource(R.drawable.right_1),
+            icon = painterResource(R.drawable.ic_right),
             title = "Continue",
             onClick = {}
         )
