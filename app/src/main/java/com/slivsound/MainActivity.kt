@@ -23,7 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.slivsound.feature.discover.DiscoverScreen
+import com.slivsound.feature.discover.presentation.DiscoverScreen
 import com.slivsound.feature.favorite.SoundScreen
 import com.slivsound.feature.settings.SettingsScreen
 import com.slivsound.navigation.GRAPH_DISCOVER
@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+
             SlivsoundTheme {
                 val navController = rememberNavController()
                 Scaffold(

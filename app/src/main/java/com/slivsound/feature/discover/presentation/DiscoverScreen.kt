@@ -1,6 +1,6 @@
-package com.slivsound.feature.discover
+package com.slivsound.feature.discover.presentation
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,24 +31,38 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.slivsound.R
+import com.slivsound.feature.discover.domain.model.Melody
 import com.slivsound.ui.components.Badge
 import com.slivsound.ui.components.Card
 import com.slivsound.ui.components.SearchField
 import com.slivsound.ui.theme.SlivsoundTheme
+import org.koin.androidx.compose.koinViewModel
+
 
 @Composable
 fun DiscoverScreen(
+    viewModel: DiscoverViewModel = koinViewModel()
 ) {
-    DiscoverView()
+
+    val ite by viewModel.state.collectAsState()
+    DiscoverView(
+        items = ite
+    )
 }
 
 @Composable
-fun DiscoverView() {
+fun DiscoverView(
+    items: List<Melody>
+) {
+    val context = LocalContext.current
     var query by remember { mutableStateOf("") }
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -76,9 +91,7 @@ fun DiscoverView() {
             }
             Spacer(Modifier.height(16.dp))
             val columns = 3
-            val items = List(7) {}
             LazyColumn(
-
                 modifier = Modifier
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp)
                     .fillMaxSize()
@@ -94,10 +107,10 @@ fun DiscoverView() {
                     Spacer(Modifier.height(16.dp))
 
                 }
-                items(items.chunked(columns)) { row ->
+                items(items.chunked(columns)) { row: List<Melody> ->
                     Row(horizontalArrangement = Arrangement.spacedBy(19.dp)) {
                         SlivsoundTheme() {
-                            row.forEach { item ->
+                            row.forEach { item: Melody ->
                                 Card(
                                     modifier = Modifier
                                         .weight(1f)
@@ -108,10 +121,15 @@ fun DiscoverView() {
                                             .fillMaxSize()
                                             .clip(MaterialTheme.shapes.large)
                                     ) {
-                                        Image(
-                                            painter = painterResource(R.drawable.img),
+                                        Log.i("DEB_TAG", "imageUrl= ${item.imageUrl}")
+                                        AsyncImage(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            model = ImageRequest.Builder(context)
+                                                .crossfade(true)
+                                                .data(item.imageUrl)
+                                                .build(),
+
                                             contentDescription = null,
-                                            modifier = Modifier.matchParentSize(),
                                             contentScale = ContentScale.Crop
                                         )
 
@@ -136,13 +154,13 @@ fun DiscoverView() {
                                         ) {
                                             Badge(icon = painterResource(R.drawable.ic_music))
                                             Text(
-                                                text = "Name",
+                                                text = item.title,
                                                 color = MaterialTheme.colorScheme.onPrimary,
                                                 style = MaterialTheme.typography.titleSmall
                                             )
                                             Spacer(Modifier.height(4.dp))
                                             Text(
-                                                text = "adsfgadfvDFSVADFVAsdv",
+                                                text = item.description,
                                                 color = MaterialTheme.colorScheme.onSurface,
                                                 style = MaterialTheme.typography.bodySmall
                                             )
@@ -154,53 +172,10 @@ fun DiscoverView() {
                         }
                     }
                 }
-                item {
-                    Text(
-                        text = stringResource(R.string.nature_Sounds),
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                    Spacer(Modifier.height(16.dp))
-                }
-                items(items.chunked(columns)) { row ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(19.dp)) {
-                        SlivsoundTheme() {
-                            row.forEach { item ->
-                                Card(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .aspectRatio(1f)
-                                ) {
 
-                                    Column() {
-                                        Badge(icon = painterResource(R.drawable.ic_music))
-                                        Text(
-                                            text = "Name",
-                                            color = MaterialTheme.colorScheme.onPrimary,
-                                            style = MaterialTheme.typography.titleMedium
-                                        )
-                                        Spacer(Modifier.height(4.dp))
-                                        Text(
-                                            text = "adsfgadfvDFSVADFVAsdv",
-                                            color = MaterialTheme.colorScheme.onPrimary,
-                                            style = MaterialTheme.typography.titleMedium
-                                        )
-                                    }
-                                }
-                            }
-                            repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
-                        }
-                    }
-                }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DiscoverPreview() {
-    SlivsoundTheme {
-        DiscoverView()
-    }
-}
 

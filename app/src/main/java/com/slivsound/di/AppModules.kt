@@ -9,3 +9,4 @@ import org.koin.core.annotation.Module
 class AppModules
 
 fun appModules() = listOf(AppModules().module)
+
