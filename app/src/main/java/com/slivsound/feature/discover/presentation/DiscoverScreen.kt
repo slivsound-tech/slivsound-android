@@ -75,7 +75,7 @@ fun DiscoverView(
         ) {
             Text(
                 modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 10.dp),
-                text = stringResource(R.string.nav_item_discover),
+                text = stringResource(R.string.tab_discover),
                 style = MaterialTheme.typography.headlineMedium
             )
             SearchField(

@@ -9,6 +9,6 @@ import com.slivsound.R
 @Composable
 fun SettingsScreen() {
 
-    Text(text = stringResource(R.string.nav_item_settings), style = MaterialTheme.typography.headlineMedium)
+    Text(text = stringResource(R.string.tab_settings), style = MaterialTheme.typography.headlineMedium)
 
 }

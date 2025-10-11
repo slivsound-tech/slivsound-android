@@ -11,5 +11,5 @@ import com.slivsound.R
 @Composable
 fun HomeScreen() {
 
-    Text(text = stringResource(R.string.nav_item_home), style = MaterialTheme.typography.headlineMedium)
+    Text(text = stringResource(R.string.tab_home), style = MaterialTheme.typography.headlineMedium)
 }
