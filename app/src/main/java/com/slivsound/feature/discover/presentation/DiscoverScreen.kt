@@ -1,6 +1,5 @@
 package com.slivsound.feature.discover.presentation
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,30 +38,31 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.slivsound.R
-import com.slivsound.feature.discover.domain.model.Melody
+import com.slivsound.feature.discover.domain.SoundModel
 import com.slivsound.ui.components.Badge
-import com.slivsound.ui.components.Card
 import com.slivsound.ui.components.SearchField
-import com.slivsound.ui.theme.SlivsoundTheme
 import org.koin.androidx.compose.koinViewModel
-
 
 @Composable
 fun DiscoverScreen(
     viewModel: DiscoverViewModel = koinViewModel()
 ) {
-
-    val ite by viewModel.state.collectAsState()
+    val melodies by viewModel.state.collectAsState()
+    val natureSounds by viewModel.state1.collectAsState()
+    val noiseforSleepCard by viewModel.state2.collectAsState()
     DiscoverView(
-        items = ite
+        items = melodies,
+        items1 = natureSounds,
+        items2 = noiseforSleepCard
     )
 }
 
 @Composable
 fun DiscoverView(
-    items: List<Melody>
+    items: List<SoundModel>,
+    items1: List<SoundModel>,
+    items2: List<SoundModel>
 ) {
-    val context = LocalContext.current
     var query by remember { mutableStateOf("") }
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -75,20 +75,18 @@ fun DiscoverView(
         ) {
             Text(
                 modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 10.dp),
-                text = stringResource(R.string.tab_discover),
+                text = stringResource(R.string.nav_item_discover),
                 style = MaterialTheme.typography.headlineMedium
             )
+            SearchField(
+                modifier = Modifier
+                    .padding(start = 20.dp, top = 10.dp, bottom = 10.dp, end = 20.dp),
+                placeholder = stringResource(R.string.discover_screen_section_Search),
+                value = query,
+                onValueChange = { query = it },
+                onSearch = { println("Search: $query") }
+            )
 
-            SlivsoundTheme {
-                SearchField(
-                    modifier = Modifier
-                        .padding(start = 20.dp, top = 10.dp, bottom = 10.dp, end = 20.dp),
-                    placeholder = "Search...",
-                    value = query,
-                    onValueChange = { query = it },
-                    onSearch = { println("Search: $query") }
-                )
-            }
             Spacer(Modifier.height(16.dp))
             val columns = 3
             LazyColumn(
@@ -101,81 +99,207 @@ fun DiscoverView(
             ) {
                 item {
                     Text(
-                        text = stringResource(R.string.melodies),
+                        text = stringResource(R.string.discover_screen_section_melodies),
                         style = MaterialTheme.typography.headlineSmall
                     )
                     Spacer(Modifier.height(16.dp))
-
                 }
-                items(items.chunked(columns)) { row: List<Melody> ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(19.dp)) {
-                        SlivsoundTheme() {
-                            row.forEach { item: Melody ->
-                                Card(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .aspectRatio(1f),
-                                ) {
-                                    Box(
-                                        Modifier
-                                            .fillMaxSize()
-                                            .clip(MaterialTheme.shapes.large)
-                                    ) {
-                                        Log.i("DEB_TAG", "imageUrl= ${item.imageUrl}")
-                                        AsyncImage(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            model = ImageRequest.Builder(context)
-                                                .crossfade(true)
-                                                .data(item.imageUrl)
-                                                .build(),
-
-                                            contentDescription = null,
-                                            contentScale = ContentScale.Crop
-                                        )
-
-                                        Box(
-                                            Modifier
-                                                .align(Alignment.BottomStart)
-                                                .fillMaxWidth()
-                                                .fillMaxHeight(0.9f)
-                                                .background(
-                                                    Brush.verticalGradient(
-                                                        listOf(
-                                                            Color.Transparent,
-                                                            Color.Black.copy(alpha = 0.55f)
-                                                        )
-                                                    )
-                                                )
-                                        )
-                                        Column(
-                                            modifier = Modifier
-                                                .padding(start = 8.dp)
-                                                .align(Alignment.BottomStart)
-                                        ) {
-                                            Badge(icon = painterResource(R.drawable.ic_music))
-                                            Text(
-                                                text = item.title,
-                                                color = MaterialTheme.colorScheme.onPrimary,
-                                                style = MaterialTheme.typography.titleSmall
-                                            )
-                                            Spacer(Modifier.height(4.dp))
-                                            Text(
-                                                text = item.description,
-                                                color = MaterialTheme.colorScheme.onSurface,
-                                                style = MaterialTheme.typography.bodySmall
-                                            )
-                                        }
-                                    }
-                                }
-                                repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
-                            }
+                items(items.chunked(columns)) { row ->
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(19.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        row.forEach { item ->
+                            MelodiesCard(item, Modifier.weight(1f))
                         }
+                        repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
                     }
                 }
-
+                item {
+                    Text(
+                        text = stringResource(R.string.discover_screen_section_nature_sounds),
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                    Spacer(Modifier.height(16.dp))
+                }
+                items(items1.chunked(columns)) { row ->
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(19.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        row.forEach { item ->
+                            NatureSoundsCard(item, Modifier.weight(1f))
+                        }
+                        repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
+                    }
+                }
+                item {
+                    Text(
+                        text = stringResource(R.string.discover_screen_section_noise_for_sleep),
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                    Spacer(Modifier.height(16.dp))
+                }
+                items(items2.chunked(columns)) { row ->
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(19.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        row.forEach { item ->
+                            NoiseforSleepCard(item, Modifier.weight(1f))
+                        }
+                        repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
+                    }
+                }
             }
         }
     }
 }
 
+@Composable
+private fun MelodiesCard(item: SoundModel, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    Box(
+        modifier = modifier
+            .aspectRatio(1f)
+            .clip(MaterialTheme.shapes.large)
+    ) {
+        AsyncImage(
+            modifier = Modifier.fillMaxWidth(),
+            model = ImageRequest.Builder(context)
+                .crossfade(true)
+                .data(item.imageUrl)
+                .build(),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+        Box(
+            Modifier
+                .align(Alignment.BottomStart)
+                .fillMaxWidth()
+                .fillMaxHeight(0.9f)
+                .background(
+                    Brush.verticalGradient(
+                        listOf(Color.Transparent, Color.Black.copy(alpha = 0.55f))
+                    )
+                )
+        )
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp, bottom = 8.dp)
+                .align(Alignment.BottomStart)
+        ) {
+            Badge(icon = painterResource(R.drawable.ic_music))
+            Text(
+                item.title,
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.titleSmall
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                item.description,
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+    }
+}
+
+@Composable
+private fun NatureSoundsCard(item: SoundModel, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    Box(
+        modifier = modifier
+            .aspectRatio(1f)
+            .clip(MaterialTheme.shapes.large)
+    ) {
+        AsyncImage(
+            modifier = Modifier.fillMaxWidth(),
+            model = ImageRequest.Builder(context)
+                .crossfade(true)
+                .data(item.imageUrl)
+                .build(),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+        Box(
+            Modifier
+                .align(Alignment.BottomStart)
+                .fillMaxWidth()
+                .fillMaxHeight(0.9f)
+                .background(
+                    Brush.verticalGradient(
+                        listOf(Color.Transparent, Color.Black.copy(alpha = 0.55f))
+                    )
+                )
+        )
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp, bottom = 8.dp)
+                .align(Alignment.BottomStart)
+        ) {
+            Badge(icon = painterResource(R.drawable.ic_music))
+            Text(
+                item.title,
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.titleSmall
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                item.description,
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+    }
+}
+
+@Composable
+private fun NoiseforSleepCard(item: SoundModel, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    Box(
+        modifier = modifier
+            .aspectRatio(1f)
+            .clip(MaterialTheme.shapes.large)
+    ) {
+        AsyncImage(
+            modifier = Modifier.fillMaxWidth(),
+            model = ImageRequest.Builder(context)
+                .crossfade(true)
+                .data(item.imageUrl)
+                .build(),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+        Box(
+            Modifier
+                .align(Alignment.BottomStart)
+                .fillMaxWidth()
+                .fillMaxHeight(0.9f)
+                .background(
+                    Brush.verticalGradient(
+                        listOf(Color.Transparent, Color.Black.copy(alpha = 0.55f))
+                    )
+                )
+        )
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp, bottom = 8.dp)
+                .align(Alignment.BottomStart)
+        ) {
+            Badge(icon = painterResource(R.drawable.ic_left_sound_wave_1))
+            Text(
+                item.title,
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.titleSmall
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                item.description,
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+    }
+}
 

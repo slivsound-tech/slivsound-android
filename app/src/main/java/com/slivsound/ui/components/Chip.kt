@@ -297,14 +297,14 @@ fun Preview_Chip_Painter() {
         var selected by remember { mutableStateOf(true) }
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Chip(
-                icon = painterResource(R.drawable.right_1),
+                icon = painterResource(R.drawable.ic_right_1),
                 size = ChipSize.Large,
                 selected = selected,
                 onSelectedChange = { selected = it },
                 onClick = {}
             )
             Chip(
-                icon = painterResource(R.drawable.right_1),
+                icon = painterResource(R.drawable.ic_right_1),
                 size = ChipSize.Large,
                 selected = !selected,
                 onSelectedChange = { selected = !it },
@@ -374,7 +374,7 @@ fun PreviewChipTitlePainterRight() {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Chip(
                 chipIconSide = ChipIconSide.Right,
-                icon = painterResource(R.drawable.right_1),
+                icon = painterResource(R.drawable.ic_right_1),
                 title = "Continue",
                 size = ChipSize.Large,
                 selected = selected,
@@ -383,7 +383,7 @@ fun PreviewChipTitlePainterRight() {
             )
             Chip(
                 chipIconSide = ChipIconSide.Left,
-                icon = painterResource(R.drawable.left_1),
+                icon = painterResource(R.drawable.ic_left_1),
                 title = "Continue",
                 size = ChipSize.Small,
                 selected = !selected,

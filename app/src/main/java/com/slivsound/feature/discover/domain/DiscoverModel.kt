@@ -1,7 +1,7 @@
-package com.slivsound.feature.discover.domain.model
+package com.slivsound.feature.discover.domain
 
 
-data class Melody(
+data class SoundModel(
     val id: String,
     val title: String,
     val description: String,

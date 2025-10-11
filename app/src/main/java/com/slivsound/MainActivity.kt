@@ -40,7 +40,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-
             SlivsoundTheme {
                 val navController = rememberNavController()
                 Scaffold(
@@ -73,12 +72,12 @@ class MainActivity : ComponentActivity() {
                                             if (discoverSelected) R.drawable.ic_search_filled
                                             else R.drawable.ic_search
                                         ),
-                                        contentDescription = stringResource(R.string.tab_discover)
+                                        contentDescription = stringResource(R.string.nav_item_discover)
                                     )
                                 },
                                 label = {
                                     Text(
-                                        stringResource(R.string.tab_discover),
+                                        stringResource(R.string.nav_item_discover),
                                         style = MaterialTheme.typography.labelMedium
                                     )
                                 },
@@ -94,12 +93,12 @@ class MainActivity : ComponentActivity() {
                                             if (soundSelected) R.drawable.ic_sound_filled
                                             else R.drawable.ic_sound
                                         ),
-                                        contentDescription = stringResource(R.string.tab_sound)
+                                        contentDescription = stringResource(R.string.nav_item_sound)
                                     )
                                 },
                                 label = {
                                     Text(
-                                        stringResource(R.string.tab_sound),
+                                        stringResource(R.string.nav_item_sound),
                                         style = MaterialTheme.typography.labelMedium
                                     )
                                 },
@@ -116,12 +115,12 @@ class MainActivity : ComponentActivity() {
                                             if (settingsSelected) R.drawable.ic_settings_filled
                                             else R.drawable.ic_settings
                                         ),
-                                        contentDescription = stringResource(R.string.tab_settings)
+                                        contentDescription = stringResource(R.string.nav_item_settings)
                                     )
                                 },
                                 label = {
                                     Text(
-                                        stringResource(R.string.tab_settings),
+                                        stringResource(R.string.nav_item_settings),
                                         style = MaterialTheme.typography.labelMedium
                                     )
                                 },

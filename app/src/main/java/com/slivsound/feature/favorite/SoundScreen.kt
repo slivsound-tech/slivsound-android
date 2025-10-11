@@ -8,5 +8,5 @@ import com.slivsound.R
 
 @Composable
 fun SoundScreen() {
-    Text(text = stringResource(R.string.tab_sound), style = MaterialTheme.typography.headlineMedium)
+    Text(text = stringResource(R.string.nav_item_sound), style = MaterialTheme.typography.headlineMedium)
 }
