@@ -1,4 +1,4 @@
-package com.slivsound.feature.discover.presentation.cards
+package com.slivsound.feature.discover.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -29,7 +29,7 @@ import com.slivsound.feature.discover.domain.SoundModel
 import com.slivsound.ui.components.Badge
 
 @Composable
-fun NoiseforSleepCard(item: SoundModel, modifier: Modifier = Modifier) {
+ fun MelodiesCard(item: SoundModel, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Box(
         modifier = modifier
@@ -61,7 +61,7 @@ fun NoiseforSleepCard(item: SoundModel, modifier: Modifier = Modifier) {
                 .padding(start = 8.dp, bottom = 8.dp)
                 .align(Alignment.BottomStart)
         ) {
-            Badge(icon = painterResource(R.drawable.ic_left_sound_wave_1))
+            Badge(icon = painterResource(R.drawable.ic_music))
             Text(
                 item.title,
                 color = MaterialTheme.colorScheme.onPrimary,
@@ -76,4 +76,3 @@ fun NoiseforSleepCard(item: SoundModel, modifier: Modifier = Modifier) {
         }
     }
 }
-

@@ -24,10 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.slivsound.R
-import com.slivsound.feature.discover.domain.SoundModel
-import com.slivsound.feature.discover.presentation.cards.MelodiesCard
-import com.slivsound.feature.discover.presentation.cards.NatureSoundsCard
-import com.slivsound.feature.discover.presentation.cards.NoiseforSleepCard
+import com.slivsound.feature.discover.presentation.components.MelodiesCard
+import com.slivsound.feature.discover.presentation.components.NatureSoundsCard
+import com.slivsound.feature.discover.presentation.components.NoiseforSleepCard
 import com.slivsound.ui.components.SearchField
 import org.koin.androidx.compose.koinViewModel
 
@@ -35,21 +34,16 @@ import org.koin.androidx.compose.koinViewModel
 fun DiscoverScreen(
     viewModel: DiscoverViewModel = koinViewModel()
 ) {
-    val melodies by viewModel.state.collectAsState()
-    val natureSounds by viewModel.state1.collectAsState()
-    val noiseforSleepCard by viewModel.state2.collectAsState()
+    val state by viewModel.state.collectAsState()
+
     DiscoverView(
-        items = melodies,
-        items1 = natureSounds,
-        items2 = noiseforSleepCard
+        items = state
     )
 }
 
 @Composable
 fun DiscoverView(
-    items: List<SoundModel>,
-    items1: List<SoundModel>,
-    items2: List<SoundModel>
+    items: State
 ) {
     var query by remember { mutableStateOf("") }
     Surface(
@@ -92,7 +86,7 @@ fun DiscoverView(
                     )
                     Spacer(Modifier.height(16.dp))
                 }
-                items(items.chunked(columns)) { row ->
+                items(items.melodies.chunked(columns)) { row ->
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(19.dp),
                         modifier = Modifier.fillMaxWidth()
@@ -110,7 +104,7 @@ fun DiscoverView(
                     )
                     Spacer(Modifier.height(16.dp))
                 }
-                items(items1.chunked(columns)) { row ->
+                items(items.sounds.chunked(columns)) { row ->
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(19.dp),
                         modifier = Modifier.fillMaxWidth()
@@ -128,7 +122,7 @@ fun DiscoverView(
                     )
                     Spacer(Modifier.height(16.dp))
                 }
-                items(items2.chunked(columns)) { row ->
+                items(items.noise.chunked(columns)) { row ->
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(19.dp),
                         modifier = Modifier.fillMaxWidth()

@@ -1,4 +1,4 @@
-package com.slivsound.feature.discover.presentation.cards
+package com.slivsound.feature.discover.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -29,7 +29,7 @@ import com.slivsound.feature.discover.domain.SoundModel
 import com.slivsound.ui.components.Badge
 
 @Composable
- fun MelodiesCard(item: SoundModel, modifier: Modifier = Modifier) {
+fun NatureSoundsCard(item: SoundModel, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     Box(
         modifier = modifier
