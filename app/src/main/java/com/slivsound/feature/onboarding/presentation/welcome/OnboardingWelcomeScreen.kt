@@ -1,4 +1,4 @@
-package com.slivsound.onboarding.presentation
+package com.slivsound.feature.onboarding.presentation.welcome
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

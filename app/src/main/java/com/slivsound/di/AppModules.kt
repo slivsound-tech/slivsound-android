@@ -8,4 +8,4 @@ import org.koin.core.annotation.Module
 @ComponentScan("com.slivsound")
 class AppModules
 
-fun appModules() = listOf(AppModules().module)
+fun appModules() =  listOf(AppModules().module)

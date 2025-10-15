@@ -1,0 +1,3 @@
+package com.slivsound.feature.onboarding.domain
+
+interface OnboardingRepository

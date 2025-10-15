@@ -1,3 +1,0 @@
-package com.slivsound.onboarding.domain
-
-interface OnboardingRepository

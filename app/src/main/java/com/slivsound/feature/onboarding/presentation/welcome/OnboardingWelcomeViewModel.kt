@@ -1,4 +1,4 @@
-package com.slivsound.onboarding.presentation
+package com.slivsound.feature.onboarding.presentation.welcome
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.Flow

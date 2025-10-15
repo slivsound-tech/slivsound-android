@@ -8,4 +8,15 @@
     <string name="onboarding_welcome_title">Welcome to your space of sounds</string>
     <string name="onboarding_welcome_subtitle">Relax, mix your favorite sounds, and drift into deep sleep.</string>
     <string name="onboarding_welcome_button">Get Started</string>
+
+    <string name="onboarding_question_title">What is your main goal?</string>
+    <string name="onboarding_question_subtitle">Choose one to personalize your experience.</string>
+    <string name="onboarding_question_button">Continue</string>
+    <string name="onboarding_question_card_text_1">Fall asleep faster</string>
+    <string name="onboarding_question_card_text_2">Improve sleep quality</string>
+    <string name="onboarding_question_card_text_3">Relax &amp; reduce stress</string>
+    <string name="onboarding_question_card_text_4">Focus &amp; work</string>
+    <string name="onboarding_question_card_text_5">Background ambience</string>
+    <string name="onboarding_question_card_text_6">Mindfulness &amp;amp meditation</string>
+
 </resources>
