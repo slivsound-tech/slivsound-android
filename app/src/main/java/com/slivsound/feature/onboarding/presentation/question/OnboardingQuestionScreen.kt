@@ -35,7 +35,9 @@ fun OnboardingQuestionScreen(
         modifier = modifier,
         state = state,
         listener = object : OnboardingQuestionClickListener {
-            override fun onNext() { navController.navigate("next_screen_route") }
+            override fun onNext() {
+                navController.navigate("discover") { popUpTo("welcome") { inclusive = true } }
+            }
             override fun onBack() { navController.popBackStack() }
         }
     )
