@@ -1,5 +1,6 @@
 package com.slivsound.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
@@ -10,8 +11,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,9 +37,7 @@ fun SearchField(
         textStyle = MaterialTheme.typography.bodyLarge,
         placeholder = {
             if (placeholder != null)
-                Text(
-                    text = placeholder
-                )
+                Text(text = placeholder)
         },
         leadingIcon = {
             Icon(
@@ -50,22 +47,36 @@ fun SearchField(
                 modifier = Modifier.size(24.dp)
             )
         },
+        trailingIcon = {
+            if (value.isNotEmpty()) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_clear),
+                    contentDescription = "Очистить",
+                    tint = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable { onValueChange("") }
+                )
+            }
+        },
         singleLine = true,
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         colors = TextFieldDefaults.colors(
+            focusedIndicatorColor = MaterialTheme.colorScheme.outline,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+            disabledIndicatorColor = MaterialTheme.colorScheme.outline,
+            errorIndicatorColor = MaterialTheme.colorScheme.error,
 
             focusedContainerColor = MaterialTheme.colorScheme.surface,
             unfocusedContainerColor = MaterialTheme.colorScheme.surface,
             disabledContainerColor = MaterialTheme.colorScheme.surface,
             errorContainerColor = MaterialTheme.colorScheme.surface,
 
-            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface,
-            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface,
-            disabledPlaceholderColor = MaterialTheme.colorScheme.onSurface,
-            errorPlaceholderColor = MaterialTheme.colorScheme.onSurface,
-
-            ),
+            cursorColor = MaterialTheme.colorScheme.onSurface,
+            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+        ),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Search
         ),
@@ -74,6 +85,7 @@ fun SearchField(
         )
     )
 }
+
 
 
 @Preview(showBackground = true)
@@ -97,7 +109,7 @@ fun SearchV2Preview() {
 
     SlivsoundTheme {
         SearchField(
-            placeholder = "Search...",
+            placeholder = "Search sounds",
             value = query,
             onValueChange = { query = it },
             onSearch = { println("Search: $query") }

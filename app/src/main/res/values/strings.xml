@@ -12,5 +12,6 @@
     <string name="discover_screen_section_melodies">Melodies</string>
     <string name="discover_screen_section_nature_sounds">  Nature Sounds</string>
     <string name="discover_screen_section_noise_for_sleep">  Noise for Sleep</string>
-    <string name="discover_screen_section_Search">Search...</string>
+    <string name="discover_screen_section_Search">Search sounds</string>
+    <string name="discover_screen_no_result">No Result</string>
 </resources>

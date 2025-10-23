@@ -14,14 +14,15 @@ data class State(
     val melodies: List<SoundModel> = emptyList(),
     val sounds: List<SoundModel> = emptyList(),
     val noise: List<SoundModel> = emptyList(),
+    val filteredMelodies: List<SoundModel> = emptyList(),
+    val filteredSounds: List<SoundModel> = emptyList(),
+    val filteredNoise: List<SoundModel> = emptyList(),
+    val searchQuery: String = ""
 )
 
 sealed interface DiscoverEvent {
     data object LoadAll : DiscoverEvent
-    data object FetchMelodies : DiscoverEvent
-    data object FetchSounds : DiscoverEvent
-    data object FetchNoise : DiscoverEvent
-
+    data class Search(val query: String) : DiscoverEvent
 }
 
 @KoinViewModel
@@ -39,39 +40,52 @@ class DiscoverViewModel(
     fun onEvent(event: DiscoverEvent) {
         viewModelScope.launch {
             when (event) {
-                DiscoverEvent.FetchMelodies -> {
-                    repository.fetchMelodies()
-                        .onSuccess { list ->
-                            _state.update { it.copy(melodies = list) }
-                        }
-                }
-
-                is DiscoverEvent.FetchSounds -> {
-                    repository.fetchSounds()
-                        .onSuccess { list ->
-                            _state.update { it.copy(noise = list) }
-                        }
-                }
-
-                is DiscoverEvent.FetchNoise -> {
-                    repository.getNoiseforSleep()
-                        .onSuccess { list ->
-                            _state.update { it.copy(sounds = list) }
-                        }
-                }
-
-                is DiscoverEvent.LoadAll -> {
+                DiscoverEvent.LoadAll -> {
                     repository.fetchMelodies().onSuccess { list ->
-                        _state.update { it.copy(melodies = list) }
+                        _state.update { it.copy(melodies = list,  filteredMelodies = list) }
                     }
                     repository.fetchSounds().onSuccess { list ->
-                        _state.update { it.copy(sounds = list) }
+                        _state.update { it.copy(sounds = list, filteredSounds = list) }
                     }
                     repository.getNoiseforSleep().onSuccess { list ->
-                        _state.update { it.copy(noise = list) }
+                        _state.update { it.copy(noise = list,filteredNoise = list) }
                     }
+                }
+
+                is DiscoverEvent.Search -> {
+                    _state.update { it.copy(searchQuery = event.query) }
+                    filterContent(event.query)
                 }
             }
         }
     }
+
+    private fun filterContent(query: String) {
+        val current = _state.value
+
+        if (query.isBlank()) {
+            _state.update {
+                it.copy(
+                    filteredMelodies = it.melodies,
+                    filteredSounds = it.sounds,
+                    filteredNoise = it.noise
+                )
+            }
+        } else {
+            _state.update {
+                it.copy(
+                    filteredMelodies = current.melodies.filter {
+                        it.title.contains(query, ignoreCase = true)
+                    },
+                    filteredSounds = current.sounds.filter {
+                        it.title.contains(query, ignoreCase = true)
+                    },
+                    filteredNoise = current.noise.filter {
+                        it.title.contains(query, ignoreCase = true)
+                    }
+                )
+            }
+        }
+    }
 }
+
