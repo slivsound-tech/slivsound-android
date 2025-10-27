@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">slivsound</string>
-    <string name="tab_home">Home</string>
     <string name="tab_discover">Discover</string>
     <string name="tab_sound">Sound</string>
+    <string name="tab_home">Home</string>
     <string name="tab_settings">Settings</string>
 
     <string name="onboarding_welcome_title">Welcome to your space of sounds</string>
     <string name="onboarding_welcome_subtitle">Relax, mix your favorite sounds, and drift into deep sleep.</string>
     <string name="onboarding_welcome_button">Get Started</string>
+
+    <string name="discover_screen_section_melodies">Melodies</string>
+    <string name="discover_screen_section_nature_sounds">  Nature Sounds</string>
+    <string name="discover_screen_section_noise_for_sleep">  Noise for Sleep</string>
+    <string name="discover_screen_section_Search">Search sounds</string>
+    <string name="discover_screen_no_result">No Result</string>
 </resources>

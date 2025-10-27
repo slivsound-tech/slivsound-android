@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    kotlin("plugin.serialization") version libs.versions.kotlin.get()
 }
 
 android {
@@ -48,6 +49,12 @@ ksp {
 
 dependencies {
 
+    implementation(platform(libs.ktor.bom))
+    implementation(libs.bundles.ktor.client)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // --- AndroidX / Compose  catalog ---
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -59,13 +66,19 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    // Koin DI
+
+    // --- Coil v3  catalog ---
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    // --- Koin  catalog ---
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
-    // Koin Annotations (KSP)
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
+
+    // --- Test ---
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -12,10 +12,25 @@ navigation-compose = "2.8.0"
 koin = "4.0.0"
 koinAnnotations = "2.0.0"
 ksp = "2.0.21-1.0.25"
+coil = "3.0.4"
+ktor = "2.3.12"
+kotlinx-serialization = "1.7.3"
+coroutines = "1.9.0"
 lifecycleViewModelKtx = "2.6.1"
 lifecycleViewModelCompose = "2.6.1"
 
 [libraries]
+ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
+ktor-client-resources = { module = "io.ktor:ktor-client-resources" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -41,6 +56,16 @@ koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compos
 # Koin Annotations (KSP)
 koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koinAnnotations" }
 koin-ksp-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koinAnnotations" }
+
+[bundles]
+ktor-client = [
+    "ktor-client-core",
+    "ktor-client-okhttp",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-logging",
+    "ktor-client-resources",
+]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

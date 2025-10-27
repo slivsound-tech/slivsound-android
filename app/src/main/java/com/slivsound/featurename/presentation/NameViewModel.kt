@@ -20,7 +20,7 @@ data class NameState(
 
 sealed interface NameEvent {
     data object SetupExample : NameEvent
-    data class SetExample(val example: String) : NameEvent
+    data class SetExample(val  example: String) : NameEvent
 }
 
 sealed interface NameEffect {
