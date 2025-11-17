@@ -29,7 +29,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DiscoverScreen(
-    viewModel: DiscoverViewModel = koinViewModel()
+    viewModel: DiscoverViewModel = koinViewModel(),
+    onSoundClick: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -37,14 +38,16 @@ fun DiscoverScreen(
         items = state,
         onSearch = { query ->
             viewModel.onEvent(DiscoverEvent.Search(query))
-        }
+        },
+        onSoundClick = onSoundClick
     )
 }
 
 @Composable
 fun DiscoverView(
     items: State,
-    onSearch: (String) -> Unit
+    onSearch: (String) -> Unit,
+    onSoundClick: (String) -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -95,7 +98,11 @@ fun DiscoverView(
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             row.forEach { item ->
-                                MelodiesCard(item, Modifier.weight(1f))
+                                MelodiesCard(
+                                    item,
+                                    Modifier.weight(1f),
+                                    onClick = { onSoundClick(item.id) }
+                                )
                             }
                             repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
                         }

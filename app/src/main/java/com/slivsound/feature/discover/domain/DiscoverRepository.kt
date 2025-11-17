@@ -4,4 +4,5 @@ interface DiscoverRepository {
     suspend fun fetchMelodies(): Result<List<SoundModel>>
     suspend fun fetchSounds(): Result<List<SoundModel>>
     suspend fun getNoiseforSleep(): Result<List<SoundModel>>
+    fun getSoundById(id: String): SoundModel?
 }
