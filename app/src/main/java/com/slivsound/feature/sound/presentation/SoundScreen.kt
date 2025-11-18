@@ -19,7 +19,9 @@ import com.slivsound.R
 import com.slivsound.feature.sound.presentation.components.CozyWarm
 import com.slivsound.feature.sound.presentation.components.ErrorView
 import com.slivsound.feature.sound.presentation.components.LoadingView
+import com.slivsound.feature.sound.presentation.components.MusicPlayer
 import com.slivsound.feature.sound.presentation.components.RotatingImage
+import com.slivsound.feature.sound.presentation.components.Timer
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -68,6 +70,18 @@ fun SoundView(
 
                         item {
                             CozyWarm(sound = sound)
+                        }
+                        item {
+                            Timer()
+                        }
+                        item {
+                            Column {
+                                Text(sound.title)
+
+                                MusicPlayer(
+                                    url = sound.audioUrl
+                                )
+                            }
                         }
                     }
 

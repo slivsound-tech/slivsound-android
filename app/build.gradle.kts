@@ -49,6 +49,12 @@ ksp {
 
 dependencies {
 
+    // ExoPlayer
+    implementation("androidx.media3:media3-exoplayer:1.3.1")
+    implementation("androidx.media3:media3-ui:1.3.1")
+    implementation("androidx.media3:media3-common:1.3.1")
+
+
     implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor.client)
     implementation(libs.kotlinx.serialization.json)
