@@ -10,6 +10,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
+
+sealed class SoundEvent {
+    data class LoadById(val id: String) : SoundEvent()
+    object LoadLast : SoundEvent()
+}
+
 sealed class State {
     object Loading : State()
     data class Success(val sound: SoundModel) : State()
@@ -29,23 +35,47 @@ class SoundViewModel(
     init {
         val soundId: String? = savedStateHandle["soundId"]
         if (soundId != null) {
-            loadSound(soundId)
+            onEvent(SoundEvent.LoadById(soundId))
         } else {
-            _uiState.value = State.Error("No soundId passed")
+            onEvent(SoundEvent.LoadLast)
         }
     }
 
-    private fun loadSound(soundId: String) {
-        viewModelScope.launch {
-            _uiState.value = State.Loading
+    fun onEvent(event: SoundEvent) {
+        when (event) {
 
-            val sound = repository.getSoundById(soundId)
-            if (sound != null) {
-                _uiState.value = State.Success(sound)
-            } else {
-                _uiState.value = State.Error("Sound not found in cache")
+            is SoundEvent.LoadById -> {
+                loadSoundById(event.id)
+            }
+
+            SoundEvent.LoadLast -> {
+                loadLastSound()
             }
         }
     }
 
+    private fun loadSoundById(id: String) {
+        viewModelScope.launch {
+            _uiState.value = State.Loading
+
+            val sound = repository.getSoundById(id)
+
+            if (sound != null) {
+                _uiState.value = State.Success(sound)
+                repository.saveLastSound(sound)
+            } else {
+                _uiState.value = State.Error("Sound not found")
+            }
+        }
+    }
+
+    private fun loadLastSound() {
+        val sound = repository.getLastSound()
+
+        if (sound != null) {
+            _uiState.value = State.Success(sound)
+        } else {
+            _uiState.value = State.Error("Выберите мелодию на экране Discover")
+        }
+    }
 }

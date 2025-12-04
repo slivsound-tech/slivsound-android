@@ -39,7 +39,8 @@ fun DiscoverScreen(
         onSearch = { query ->
             viewModel.onEvent(DiscoverEvent.Search(query))
         },
-        onSoundClick = onSoundClick
+        onSoundClick = onSoundClick,
+        viewModel = viewModel
     )
 }
 
@@ -47,7 +48,8 @@ fun DiscoverScreen(
 fun DiscoverView(
     items: State,
     onSearch: (String) -> Unit,
-    onSoundClick: (String) -> Unit
+    onSoundClick: (String) -> Unit,
+    viewModel: DiscoverViewModel
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -101,7 +103,10 @@ fun DiscoverView(
                                 MelodiesCard(
                                     item,
                                     Modifier.weight(1f),
-                                    onClick = { onSoundClick(item.id) }
+                                    onClick = {
+                                        viewModel.onSoundSelected(item)
+                                        onSoundClick(item.id)
+                                    }
                                 )
                             }
                             repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }

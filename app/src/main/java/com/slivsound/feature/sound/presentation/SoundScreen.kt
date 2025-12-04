@@ -20,8 +20,8 @@ import com.slivsound.feature.sound.presentation.components.CozyWarm
 import com.slivsound.feature.sound.presentation.components.ErrorView
 import com.slivsound.feature.sound.presentation.components.LoadingView
 import com.slivsound.feature.sound.presentation.components.MusicPlayer
+import com.slivsound.feature.sound.presentation.components.SoundCategorySection
 import com.slivsound.feature.sound.presentation.components.RotatingImage
-import com.slivsound.feature.sound.presentation.components.Timer
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -29,6 +29,7 @@ fun SoundScreen(
     viewModel: SoundViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
+
     SoundView(items = state)
 }
 
@@ -72,17 +73,15 @@ fun SoundView(
                             CozyWarm(sound = sound)
                         }
                         item {
-                            Timer()
+                            MusicPlayer(
+                                url = sound.audioUrl
+                            )
+
                         }
                         item {
-                            Column {
-                                Text(sound.title)
-
-                                MusicPlayer(
-                                    url = sound.audioUrl
-                                )
-                            }
+                            SoundCategorySection(items.sound)
                         }
+
                     }
 
                     is State.Loading -> {

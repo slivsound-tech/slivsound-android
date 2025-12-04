@@ -87,5 +87,8 @@ class DiscoverViewModel(
             }
         }
     }
+    fun onSoundSelected(sound: SoundModel) {
+        repository.saveLastSound(sound)
+    }
 }
 

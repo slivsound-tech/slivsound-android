@@ -27,4 +27,14 @@ class DiscoverRepositoryImpl(
             .also { list -> list.forEach { cache[it.id] = it } }
     }
     override fun getSoundById(id: String): SoundModel? = cache[id]
+    private var lastSelectedSound: SoundModel? = null
+
+    override fun saveLastSound(sound: SoundModel) {
+        lastSelectedSound = sound
+    }
+
+    override fun getLastSound(): SoundModel? {
+        return lastSelectedSound
+    }
+
 }
