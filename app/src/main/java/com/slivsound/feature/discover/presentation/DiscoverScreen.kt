@@ -20,36 +20,44 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.slivsound.R
 import com.slivsound.feature.discover.presentation.components.MelodiesCard
 import com.slivsound.feature.discover.presentation.components.NatureSoundsCard
 import com.slivsound.feature.discover.presentation.components.NoiseforSleepCard
+import com.slivsound.feature.sound.presentation.repositiry.Play
 import com.slivsound.ui.components.SearchField
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DiscoverScreen(
     viewModel: DiscoverViewModel = koinViewModel(),
-    onSoundClick: (String) -> Unit
+    mode: String,
+    onSoundClick: (String) -> Unit,
+    navController: NavController
 ) {
     val state by viewModel.state.collectAsState()
 
     DiscoverView(
         items = state,
+        mode = mode,
         onSearch = { query ->
             viewModel.onEvent(DiscoverEvent.Search(query))
         },
         onSoundClick = onSoundClick,
-        viewModel = viewModel
+        viewModel = viewModel,
+        navController = navController
     )
 }
 
 @Composable
 fun DiscoverView(
     items: State,
+    mode: String,
     onSearch: (String) -> Unit,
     onSoundClick: (String) -> Unit,
-    viewModel: DiscoverViewModel
+    viewModel: DiscoverViewModel,
+    navController: NavController
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -90,7 +98,7 @@ fun DiscoverView(
                     item {
                         Text(
                             text = stringResource(R.string.discover_screen_section_melodies),
-                            style = MaterialTheme.typography.headlineSmall
+//                            style = MaterialTheme.typography.headlineSmall
                         )
                         Spacer(Modifier.height(16.dp))
                     }
@@ -104,10 +112,20 @@ fun DiscoverView(
                                     item,
                                     Modifier.weight(1f),
                                     onClick = {
-                                        viewModel.onSoundSelected(item)
-                                        onSoundClick(item.id)
+                                        if (mode == "select") {
+                                            viewModel.addItems(
+                                                Play(
+                                                    id = item.id,
+                                                )
+                                            )
+                                            navController.popBackStack()
+                                        } else {
+                                            viewModel.onSoundSelected(item)
+                                            onSoundClick(item.id)
+                                        }
                                     }
                                 )
+
                             }
                             repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
                         }

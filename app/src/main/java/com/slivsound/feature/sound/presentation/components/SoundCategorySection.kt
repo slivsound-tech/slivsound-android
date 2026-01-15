@@ -12,16 +12,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.slivsound.R
 import com.slivsound.feature.discover.domain.SoundModel
 import com.slivsound.ui.components.Badge
-import com.slivsound.ui.components.Badge1
+import com.slivsound.ui.components.ButtonPlus
 import com.slivsound.ui.components.SoundListItem
 
 @Composable
-fun SoundCategorySection(id: SoundModel) {
+fun SoundCategorySection(
+    soundId: SoundModel,
+    onAddClick: () -> Unit
+) {
 
     Column {
         Column {
@@ -36,15 +38,16 @@ fun SoundCategorySection(id: SoundModel) {
                 ) {
                     Text(text = "1/1")
                     Spacer(modifier = Modifier.width(8.dp))
-                    Badge1(icon = painterResource(R.drawable.ic_plus))
+                    ButtonPlus(
+                        icon = painterResource(R.drawable.ic_plus), onAddClick = {})
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))
             Row {
                 SoundListItem(
-                    title = id.title,
-                    description = id.description,
-                    imageUrl = id.imageUrl
+                    title = soundId.title,
+                    description = soundId.description,
+                    imageUrl = soundId.imageUrl
                 )
             }
         }
@@ -59,20 +62,16 @@ fun SoundCategorySection(id: SoundModel) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "1/6")
+//                Text (text = "${size.toString()}/6")
+                Text("0/6")
                 Spacer(modifier = Modifier.width(8.dp))
-                Badge1(icon = painterResource(R.drawable.ic_plus))
+                ButtonPlus(
+                    icon = painterResource(R.drawable.ic_plus),
+                    onAddClick = onAddClick
+                )
             }
 
         }
 
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun ShowNatureSound() {
-
-//    SoundCategorySection("")
 }

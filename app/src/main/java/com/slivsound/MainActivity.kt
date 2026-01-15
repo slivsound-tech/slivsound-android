@@ -137,11 +137,25 @@ class MainActivity : ComponentActivity() {
                         startDestination = GRAPH_DISCOVER,
                         modifier = Modifier.padding(inner)
                     ) {
+
                         navigation(route = GRAPH_DISCOVER, startDestination = ROUTE_DISCOVER_MAIN) {
-                            composable(ROUTE_DISCOVER_MAIN) {
-                                DiscoverScreen(onSoundClick = { soundId ->
-                                    navController.navigate(routeToSoundDetail(soundId))
-                                })
+                            composable(
+                                route = "discover_main?mode={mode}",
+                                arguments = listOf(
+                                    navArgument("mode") {
+                                        type = NavType.StringType
+                                        defaultValue = "default"
+                                    }
+                                )
+                            ) { backStackEntry ->
+
+                                val mode = backStackEntry.arguments?.getString("mode") ?: "default"
+                                DiscoverScreen(
+                                    mode = mode,
+                                    navController = navController,
+                                    onSoundClick = { soundId ->
+                                        navController.navigate(routeToSoundDetail(soundId))
+                                    })
                             }
                         }
                         navigation(route = GRAPH_SOUND, startDestination = ROUTE_SOUND_MAIN) {
@@ -151,7 +165,7 @@ class MainActivity : ComponentActivity() {
                                     type = NavType.StringType
                                 })
                             ) {
-                                SoundScreen()
+                                SoundScreen(navController = navController)
                             }
                         }
                         navigation(route = GRAPH_SETTINGS, startDestination = ROUTE_SETTINGS_MAIN) {

@@ -88,17 +88,6 @@ fun Badge(
         )
     }
 }
-@Composable
-fun Badge1(
-    icon: Painter,
-) {
-        Icon(
-            painter = icon,
-            tint = MaterialTheme.colorScheme.onPrimary,
-            contentDescription = null,
-            modifier = Modifier.size(16.dp)
-        )
-}
 
 @Composable
 fun Badge(

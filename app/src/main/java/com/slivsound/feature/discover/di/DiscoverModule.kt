@@ -11,5 +11,5 @@ import org.koin.dsl.module
 val discoverModule = module {
     single< DiscoverApiRepository> { DiscoverApiRepositoryImpl(get()) }
     single<DiscoverRepository> { DiscoverRepositoryImpl(get()) }
-    viewModel { DiscoverViewModel(repository = get()) }
+    viewModel { DiscoverViewModel(playrepository = get(), repository = get())  }
 }

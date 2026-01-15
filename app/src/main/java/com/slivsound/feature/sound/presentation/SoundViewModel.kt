@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.slivsound.feature.discover.domain.DiscoverRepository
 import com.slivsound.feature.discover.domain.SoundModel
+import com.slivsound.feature.sound.presentation.repositiry.Play
+import com.slivsound.feature.sound.presentation.repositiry.PlayRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -14,11 +17,22 @@ import org.koin.android.annotation.KoinViewModel
 sealed class SoundEvent {
     data class LoadById(val id: String) : SoundEvent()
     object LoadLast : SoundEvent()
+
+    object OnAddClick : SoundEvent()
+}
+
+sealed class SoundEffect {
+    object NavigateToDiscover : SoundEffect()
 }
 
 sealed class State {
     object Loading : State()
-    data class Success(val sound: SoundModel) : State()
+    data class Content(
+        val mix: List<Play>,
+        val mixSounds: List<SoundModel>,
+        val allSounds: List<SoundModel>
+    ) : State()
+
     data class Error(val message: String) : State()
 }
 
@@ -26,18 +40,76 @@ sealed class State {
 @KoinViewModel
 class SoundViewModel(
     savedStateHandle: SavedStateHandle,
-    private val repository: DiscoverRepository
+    private val repository: DiscoverRepository,
+    private val playRepository: PlayRepository,
 ) : ViewModel() {
 
+    private val _effect = MutableSharedFlow<SoundEffect>()
+    val effect = _effect
+    private suspend fun sendEffect(effect: SoundEffect) {
+        _effect.emit(effect)
+    }
+
+    private val _selectedSound = MutableStateFlow<SoundModel?>(null)
+    val selectedSound: StateFlow<SoundModel?> = _selectedSound
     private val _uiState = MutableStateFlow<State>(State.Loading)
     val uiState: StateFlow<State> = _uiState
 
     init {
+
         val soundId: String? = savedStateHandle["soundId"]
         if (soundId != null) {
             onEvent(SoundEvent.LoadById(soundId))
         } else {
             onEvent(SoundEvent.LoadLast)
+        }
+        loadAllSounds()
+        observeMix()
+    }
+
+    private fun buildMixSounds(
+        mix: List<Play>,
+        allSounds: List<SoundModel>
+    ): List<SoundModel> {
+        val soundMap = allSounds.associateBy { it.id }
+
+        return mix.mapNotNull { play ->
+            soundMap[play.id]
+        }
+    }
+
+    private fun loadAllSounds() {
+        viewModelScope.launch {
+            repository.fetchMelodies()
+                .onSuccess { sounds ->
+                    val currentMix = (playRepository.items.value)
+                    val mixSounds = buildMixSounds(currentMix, sounds)
+
+                    _uiState.value = State.Content(
+                        mix = currentMix,
+                        mixSounds = mixSounds,
+                        allSounds = sounds
+                    )
+                }
+                .onFailure {
+                    _uiState.value = State.Error("Ошибка загрузки музыки")
+                }
+        }
+    }
+
+    private fun observeMix() {
+        viewModelScope.launch {
+            playRepository.items.collect { mix ->
+                val current = _uiState.value
+                if (current is State.Content) {
+                    val mixSounds = buildMixSounds(mix, current.allSounds)
+
+                    _uiState.value = current.copy(
+                        mix = mix,
+                        mixSounds = mixSounds
+                    )
+                }
+            }
         }
     }
 
@@ -48,20 +120,25 @@ class SoundViewModel(
                 loadSoundById(event.id)
             }
 
+            is
             SoundEvent.LoadLast -> {
                 loadLastSound()
+            }
+
+            is SoundEvent.OnAddClick -> {
+                viewModelScope.launch {
+                    sendEffect(SoundEffect.NavigateToDiscover)
+                }
             }
         }
     }
 
     private fun loadSoundById(id: String) {
         viewModelScope.launch {
-            _uiState.value = State.Loading
-
             val sound = repository.getSoundById(id)
 
             if (sound != null) {
-                _uiState.value = State.Success(sound)
+                _selectedSound.value = sound
                 repository.saveLastSound(sound)
             } else {
                 _uiState.value = State.Error("Sound not found")
@@ -69,11 +146,12 @@ class SoundViewModel(
         }
     }
 
+
     private fun loadLastSound() {
         val sound = repository.getLastSound()
 
         if (sound != null) {
-            _uiState.value = State.Success(sound)
+            _selectedSound.value = sound
         } else {
             _uiState.value = State.Error("Выберите мелодию на экране Discover")
         }

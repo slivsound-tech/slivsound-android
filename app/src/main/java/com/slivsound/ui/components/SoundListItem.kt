@@ -44,7 +44,7 @@ fun SoundListItem(
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outline,
-//                shape = фічMaйусфterialTheme.shapes.medium
+               shape = MaterialTheme.shapes.medium
             ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme
