@@ -1,5 +1,6 @@
 package com.slivsound.feature.sound.presentation.components
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.slivsound.R
@@ -21,6 +23,7 @@ import com.slivsound.ui.components.SoundListItem
 
 @Composable
 fun SoundCategorySection(
+    size: Int,
     soundId: SoundModel,
     onAddClick: () -> Unit
 ) {
@@ -62,13 +65,26 @@ fun SoundCategorySection(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-//                Text (text = "${size.toString()}/6")
-                Text("0/6")
+                val context = LocalContext.current
+
+                Text(text = "$size/6")
                 Spacer(modifier = Modifier.width(8.dp))
+
                 ButtonPlus(
-                    icon = painterResource(R.drawable.ic_plus),
-                    onAddClick = onAddClick
+                    icon = painterResource(id = R.drawable.ic_plus),
+                    onAddClick = {
+                        if (size < 6) {
+                            onAddClick()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                R.string.sound_screen_section_add_nature_sounds,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 )
+
             }
 
         }

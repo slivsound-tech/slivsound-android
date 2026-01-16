@@ -108,6 +108,7 @@ fun SoundView(
                             item {
                                 selectedSound?.let { sound ->
                                     SoundCategorySection(
+                                        size = items.mixSounds.size,
                                         soundId = sound,
                                         onAddClick = onAddClick
                                     )
