@@ -98,7 +98,6 @@ fun DiscoverView(
                     item {
                         Text(
                             text = stringResource(R.string.discover_screen_section_melodies),
-//                            style = MaterialTheme.typography.headlineSmall
                         )
                         Spacer(Modifier.height(16.dp))
                     }
@@ -146,7 +145,23 @@ fun DiscoverView(
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             row.forEach { item ->
-                                NatureSoundsCard(item, Modifier.weight(1f))
+                                NatureSoundsCard(
+                                    item, Modifier.weight(1f),
+                                    onClick = {
+                                        if (mode == "select") {
+                                            viewModel.addItems(
+                                                Play(
+                                                    id = item.id,
+                                                )
+                                            )
+                                            navController.popBackStack()
+                                        } else {
+                                            viewModel.onSoundSelected(item)
+                                            onSoundClick(item.id)
+                                        }
+                                    }
+                                )
+
                             }
                             repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
                         }

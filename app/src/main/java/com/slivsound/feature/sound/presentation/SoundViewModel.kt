@@ -80,7 +80,7 @@ class SoundViewModel(
 
     private fun loadAllSounds() {
         viewModelScope.launch {
-            repository.fetchMelodies()
+            repository.fetchSounds()
                 .onSuccess { sounds ->
                     val currentMix = (playRepository.items.value)
                     val mixSounds = buildMixSounds(currentMix, sounds)
