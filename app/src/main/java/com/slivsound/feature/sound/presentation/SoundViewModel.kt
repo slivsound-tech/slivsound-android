@@ -17,11 +17,16 @@ import org.koin.android.annotation.KoinViewModel
 sealed class SoundEvent {
     data class LoadById(val id: String) : SoundEvent()
     object LoadLast : SoundEvent()
-
+    object OnShareClick : SoundEvent()
     object OnAddClick : SoundEvent()
 }
 
 sealed class SoundEffect {
+    data class ShareSound(
+        val title: String,
+        val url: String
+    ) : SoundEffect()
+
     object NavigateToDiscover : SoundEffect()
 }
 
@@ -112,6 +117,19 @@ class SoundViewModel(
             }
         }
     }
+    private fun onShareClick() {
+        viewModelScope.launch {
+            val sound = selectedSound.value ?: return@launch
+
+            _effect.emit(
+                SoundEffect.ShareSound(
+                    title = sound.title,
+                    url = sound.audioUrl
+                )
+            )
+        }
+    }
+
 
     fun onEvent(event: SoundEvent) {
         when (event) {
@@ -123,6 +141,11 @@ class SoundViewModel(
             is
             SoundEvent.LoadLast -> {
                 loadLastSound()
+            }
+
+            is
+            SoundEvent.OnShareClick -> {
+                onShareClick()
             }
 
             is SoundEvent.OnAddClick -> {

@@ -1,5 +1,6 @@
 package com.slivsound.feature.sound.presentation
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -45,6 +46,14 @@ fun SoundScreen(
                         restoreState = false
                     }
                 }
+                is SoundEffect.ShareSound -> {
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            "${effect.title}\n${effect.url}"
+                        )
+                    }
             }
         }
     }
