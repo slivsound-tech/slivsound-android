@@ -10,8 +10,10 @@ import com.slivsound.feature.sound.presentation.repositiry.PlayRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
+import kotlin.String
 
 
 sealed class SoundEvent {
@@ -23,6 +25,7 @@ sealed class SoundEvent {
 
 sealed class SoundEffect {
     data class ShareSound(
+        val imageUrl: String,
         val title: String,
         val url: String
     ) : SoundEffect()
@@ -50,7 +53,7 @@ class SoundViewModel(
 ) : ViewModel() {
 
     private val _effect = MutableSharedFlow<SoundEffect>()
-    val effect = _effect
+    val effect = _effect.asSharedFlow()
     private suspend fun sendEffect(effect: SoundEffect) {
         _effect.emit(effect)
     }
@@ -117,12 +120,14 @@ class SoundViewModel(
             }
         }
     }
+
     private fun onShareClick() {
         viewModelScope.launch {
             val sound = selectedSound.value ?: return@launch
 
             _effect.emit(
                 SoundEffect.ShareSound(
+                    imageUrl = sound.imageUrl,
                     title = sound.title,
                     url = sound.audioUrl
                 )

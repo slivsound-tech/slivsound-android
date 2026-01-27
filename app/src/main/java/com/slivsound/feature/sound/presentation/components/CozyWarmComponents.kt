@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,10 +20,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.slivsound.R
 import com.slivsound.feature.discover.domain.SoundModel
-import com.slivsound.ui.components.IconButton
 
 @Composable
-fun CozyWarm(sound: SoundModel) {
+fun CozyWarm(
+    sound: SoundModel,
+    onClick: () -> Unit
+) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -67,26 +70,20 @@ fun CozyWarm(sound: SoundModel) {
                     .size(32.dp)
             )
             Spacer(Modifier.width(16.dp))
+
             IconButton(
-                onClick = {
-                    viewModel.onEvent(SoundEvent.OnShareClick)
-                }
+                onClick = onClick,
+                modifier = Modifier
+                    .size(32.dp)
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_share),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(32.dp)
+                    painter = painterResource(id = R.drawable.ic_share),
+                    contentDescription = "Share melody"
                 )
             }
 
-            Image(
-                painter = painterResource(R.drawable.ic_share),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(32.dp)
-            )
         }
 
     }
+
 }
