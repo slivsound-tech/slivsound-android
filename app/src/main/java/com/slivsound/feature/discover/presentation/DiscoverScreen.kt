@@ -25,7 +25,6 @@ import com.slivsound.R
 import com.slivsound.feature.discover.presentation.components.MelodiesCard
 import com.slivsound.feature.discover.presentation.components.NatureSoundsCard
 import com.slivsound.feature.discover.presentation.components.NoiseforSleepCard
-import com.slivsound.feature.sound.presentation.repositiry.Play
 import com.slivsound.ui.components.SearchField
 import org.koin.androidx.compose.koinViewModel
 
@@ -112,11 +111,10 @@ fun DiscoverView(
                                     Modifier.weight(1f),
                                     onClick = {
                                         if (mode == "select") {
-                                            viewModel.addItems(
-                                                Play(
-                                                    id = item.id,
-                                                )
-                                            )
+                                            navController.previousBackStackEntry
+                                                ?.savedStateHandle
+                                                ?.set("selectedSoundId", item.id)
+
                                             navController.popBackStack()
                                         } else {
                                             viewModel.onSoundSelected(item)
@@ -149,11 +147,10 @@ fun DiscoverView(
                                     item, Modifier.weight(1f),
                                     onClick = {
                                         if (mode == "select") {
-                                            viewModel.addItems(
-                                                Play(
-                                                    id = item.id,
-                                                )
-                                            )
+                                            navController.previousBackStackEntry
+                                                ?.savedStateHandle
+                                                ?.set("selectedSoundId", item.id)
+
                                             navController.popBackStack()
                                         } else {
                                             viewModel.onSoundSelected(item)

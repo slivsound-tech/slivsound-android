@@ -13,10 +13,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
-import kotlin.String
 
 
 sealed class SoundEvent {
+
+    object OnPlayClick : SoundEvent()
     data class LoadById(val id: String) : SoundEvent()
     object LoadLast : SoundEvent()
     object OnShareClick : SoundEvent()
@@ -52,7 +53,8 @@ class SoundViewModel(
     private val repository: DiscoverRepository,
     private val playRepository: PlayRepository,
 ) : ViewModel() {
-
+    private val _isPlaying = MutableStateFlow(false)
+    val isPlaying: StateFlow<Boolean> = _isPlaying
     private val _effect = MutableSharedFlow<SoundEffect>()
     val effect = _effect.asSharedFlow()
     private suspend fun sendEffect(effect: SoundEffect) {
@@ -117,6 +119,7 @@ class SoundViewModel(
                         mix = mix,
                         mixSounds = mixSounds
                     )
+                    playRepository.playEffects(mix)
                 }
             }
         }
@@ -128,7 +131,7 @@ class SoundViewModel(
 
             _effect.emit(
                 SoundEffect.ShareSound(
-                     id = sound.id,
+                    id = sound.id,
                     imageUrl = sound.imageUrl,
                     title = sound.title,
                     url = sound.audioUrl
@@ -137,9 +140,45 @@ class SoundViewModel(
         }
     }
 
+    private fun togglePlay() {
+        _isPlaying.value = !_isPlaying.value
+
+        if (_isPlaying.value) {
+            playRepository.playAll()
+        } else {
+            playRepository.pauseAll()
+        }
+    }
+
+    fun onEffectAdd(play: Play) {
+        viewModelScope.launch {
+            playRepository.addItem(play)
+
+            if (_isPlaying.value) {
+                playRepository.playEffects(listOf(play))
+            }
+        }
+    }
+
+    fun addEffectById(soundId: String) {
+        viewModelScope.launch {
+            val sound = repository.getSoundById(soundId) ?: return@launch
+
+            onEffectAdd(
+                Play(
+                    id = sound.id,
+                    audioUrl = sound.audioUrl
+                )
+            )
+        }
+    }
+
 
     fun onEvent(event: SoundEvent) {
         when (event) {
+            is SoundEvent.OnPlayClick -> {
+                togglePlay()
+            }
 
             is SoundEvent.LoadById -> {
                 loadSoundById(event.id)

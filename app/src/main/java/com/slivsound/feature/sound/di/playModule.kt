@@ -5,5 +5,5 @@ import com.slivsound.feature.sound.presentation.repositiry.PlayRepositoryImpl
 import org.koin.dsl.module
 
 val playModule = module {
-    single< PlayRepository> { PlayRepositoryImpl() }
+    single<PlayRepository> { PlayRepositoryImpl(context = get()) }
 }

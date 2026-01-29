@@ -2,10 +2,8 @@ package com.slivsound.feature.discover.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.slivsound.feature.sound.presentation.repositiry.PlayRepository
 import com.slivsound.feature.discover.domain.DiscoverRepository
 import com.slivsound.feature.discover.domain.SoundModel
-import com.slivsound.feature.sound.presentation.repositiry.Play
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -25,14 +23,11 @@ data class State(
 sealed interface DiscoverEvent {
     data object LoadAll : DiscoverEvent
     data class Search(val query: String) : DiscoverEvent
-
-//    data class OnSoundSelected(val sound: SoundModel) : DiscoverEvent
 }
 
 @KoinViewModel
 class DiscoverViewModel(
     private val repository: DiscoverRepository,
-    private val playrepository: PlayRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
@@ -40,12 +35,6 @@ class DiscoverViewModel(
 
     init {
         onEvent(DiscoverEvent.LoadAll)
-    }
-
-    fun addItems(sound: Play) {
-        viewModelScope.launch {
-            playrepository.addItem(sound)
-        }
     }
 
     fun onEvent(event: DiscoverEvent) {

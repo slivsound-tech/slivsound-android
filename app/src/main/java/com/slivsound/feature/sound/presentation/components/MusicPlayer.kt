@@ -28,7 +28,9 @@ import com.slivsound.R
 
 @Composable
 fun MusicPlayer(
-    url: String
+    url: String,
+    isPlaying: Boolean,
+    onPlayPauseClick: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -39,7 +41,6 @@ fun MusicPlayer(
         }
     }
 
-    var isPlaying by remember { mutableStateOf(false) }
     var secondsLeft by remember { mutableStateOf(30 * 60) }
 
 
@@ -76,12 +77,10 @@ fun MusicPlayer(
 
             ) {
             IconButton(
-                modifier = Modifier
-                    .size(64.dp),
-                onClick = { isPlaying = !isPlaying }
+                modifier = Modifier.size(64.dp),
+                onClick = onPlayPauseClick
             ) {
                 Icon(
-
                     painter = painterResource(
                         if (isPlaying) R.drawable.ic_suspend
                         else R.drawable.ic_play
@@ -104,7 +103,7 @@ fun MusicPlayer(
     }
     Spacer(Modifier.height(16.dp))
     Row() {
-        TimeOptionals ( onTimeSelected = { minutes ->
+        TimeOptionals(onTimeSelected = { minutes ->
             secondsLeft = minutes * 60
         })
     }

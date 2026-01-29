@@ -41,6 +41,8 @@ fun SoundScreen(
     val context = LocalContext.current
     val state by viewModel.uiState.collectAsState()
     val selectedSound by viewModel.selectedSound.collectAsState()
+    val isPlaying by viewModel.isPlaying.collectAsState()
+
     LaunchedEffect(Unit) {
         viewModel.effect.collect { effect ->
             when (effect) {
@@ -80,8 +82,24 @@ fun SoundScreen(
             }
         }
     }
+    LaunchedEffect(navController) {
+        navController.currentBackStackEntry
+            ?.savedStateHandle
+            ?.getStateFlow<String?>("selectedSoundId", null)
+            ?.collect { selectedId ->
+                if (selectedId != null) {
+                    viewModel.addEffectById(selectedId)
+
+                    navController.currentBackStackEntry
+                        ?.savedStateHandle
+                        ?.remove<String>("selectedSoundId")
+                }
+            }
+    }
+
 
     SoundView(
+        isPlaying = isPlaying,
         items = state,
         selectedSound = selectedSound,
         onAddClick = {
@@ -89,6 +107,9 @@ fun SoundScreen(
         },
         onShareClick = {
             viewModel.onEvent(SoundEvent.OnShareClick)
+        },
+        onPlayPauseClick = {
+            viewModel.onEvent(SoundEvent.OnPlayClick)
         }
     )
 
@@ -96,11 +117,12 @@ fun SoundScreen(
 
 @Composable
 fun SoundView(
-
     items: State,
     selectedSound: SoundModel?,
+    isPlaying: Boolean,
     onAddClick: () -> Unit,
-    onShareClick: () -> Unit
+    onShareClick: () -> Unit,
+    onPlayPauseClick: () -> Unit
 ) {
 
     Surface(
@@ -142,8 +164,11 @@ fun SoundView(
                             }
                             item {
                                 MusicPlayer(
-                                    url = sound.audioUrl
+                                    url = sound.audioUrl,
+                                    isPlaying = isPlaying,
+                                    onPlayPauseClick = onPlayPauseClick
                                 )
+
 
                             }
                             item {
