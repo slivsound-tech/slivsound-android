@@ -25,6 +25,7 @@ sealed class SoundEvent {
 
 sealed class SoundEffect {
     data class ShareSound(
+        val id: String,
         val imageUrl: String,
         val title: String,
         val url: String
@@ -127,6 +128,7 @@ class SoundViewModel(
 
             _effect.emit(
                 SoundEffect.ShareSound(
+                     id = sound.id,
                     imageUrl = sound.imageUrl,
                     title = sound.title,
                     url = sound.audioUrl

@@ -48,6 +48,7 @@ ksp {
 }
 
 dependencies {
+    implementation("net.jthink:jaudiotagger:3.0.1")
 
     // ExoPlayer
     implementation("androidx.media3:media3-exoplayer:1.3.1")

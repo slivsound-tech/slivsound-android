@@ -1,6 +1,5 @@
 package com.slivsound.feature.sound.presentation
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,7 +16,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -31,6 +27,9 @@ import com.slivsound.feature.sound.presentation.components.LoadingView
 import com.slivsound.feature.sound.presentation.components.MusicPlayer
 import com.slivsound.feature.sound.presentation.components.RotatingImage
 import com.slivsound.feature.sound.presentation.components.SoundCategorySection
+import com.slivsound.feature.sound.share.FileDownloader
+import com.slivsound.feature.sound.share.ShareManager
+import com.slivsound.feature.sound.util.AudioMetadataUtil
 import com.slivsound.ui.components.SoundListItem
 import org.koin.androidx.compose.koinViewModel
 
@@ -53,30 +52,35 @@ fun SoundScreen(
                 }
 
                 is SoundEffect.ShareSound -> {
-                    val intent = Intent(Intent.ACTION_SEND).apply {
-                        type = "text/plain"
-                        putExtra(
-                            Intent.EXTRA_TEXT,
-                            "${effect.imageUrl}\n${effect.title}\n${effect.url}"
-                        )
-                    }
-                    context.startActivity(
-                        Intent.createChooser(intent, "Поделиться")
+
+                    val audio = FileDownloader.downloadToCache(
+                        context,
+                        effect.url,
+                        "share_${effect.id}.mp3"
+                    )
+
+                    val cover = FileDownloader.downloadToCache(
+                        context,
+                        effect.imageUrl,
+                        "cover_${effect.id}.jpg"
+                    )
+
+                    AudioMetadataUtil.embedCover(
+                        mp3File = audio,
+                        coverFile = cover,
+                        title = effect.title
+                    )
+
+                    ShareManager(context).shareAudio(
+                        file = audio,
+                        title = effect.title,
+                        link = effect.url
                     )
                 }
             }
         }
     }
-    IconButton(
-        onClick = {
-            viewModel.onEvent(SoundEvent.OnShareClick)
-        }
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_share),
-            contentDescription = "Share"
-        )
-    }
+
     SoundView(
         items = state,
         selectedSound = selectedSound,
