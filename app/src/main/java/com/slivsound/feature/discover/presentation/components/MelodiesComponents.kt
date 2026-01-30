@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,52 +28,58 @@ import coil3.request.crossfade
 import com.slivsound.R
 import com.slivsound.feature.discover.domain.SoundModel
 import com.slivsound.ui.components.Badge
+import com.slivsound.ui.components.Card
 
 @Composable
- fun MelodiesCard(item: SoundModel, modifier: Modifier = Modifier) {
+fun MelodiesCard(item: SoundModel, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val context = LocalContext.current
-    Box(
+    Card(
         modifier = modifier
             .aspectRatio(1f)
-            .clip(MaterialTheme.shapes.large)
+            .clip(MaterialTheme.shapes.large),
+        onClick = onClick
     ) {
-        AsyncImage(
-            modifier = Modifier.fillMaxWidth(),
-            model = ImageRequest.Builder(context)
-                .crossfade(true)
-                .data(item.imageUrl)
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
         Box(
-            Modifier
-                .align(Alignment.BottomStart)
-                .fillMaxWidth()
-                .fillMaxHeight(0.9f)
-                .background(
-                    Brush.verticalGradient(
-                        listOf(Color.Transparent, Color.Black.copy(alpha = 0.55f))
-                    )
-                )
-        )
-        Column(
-            modifier = Modifier
-                .padding(start = 8.dp, bottom = 8.dp)
-                .align(Alignment.BottomStart)
+            modifier = Modifier.fillMaxSize()
         ) {
-            Badge(icon = painterResource(R.drawable.ic_music))
-            Text(
-                item.title,
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleSmall
+            AsyncImage(
+                modifier = Modifier.fillMaxWidth(),
+                model = ImageRequest.Builder(context)
+                    .crossfade(true)
+                    .data(item.imageUrl)
+                    .build(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop
             )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                item.description,
-                color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.bodySmall
+            Box(
+                Modifier
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.9f)
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(Color.Transparent, Color.Black.copy(alpha = 0.55f))
+                        )
+                    )
             )
+            Column(
+                modifier = Modifier
+                    .padding(start = 8.dp, bottom = 8.dp)
+                    .align(Alignment.BottomStart)
+            ) {
+                Badge(icon = painterResource(R.drawable.ic_music))
+                Text(
+                    item.title,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    item.description,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
     }
 }

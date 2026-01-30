@@ -48,6 +48,13 @@ ksp {
 }
 
 dependencies {
+    implementation("net.jthink:jaudiotagger:3.0.1")
+
+    // ExoPlayer
+    implementation("androidx.media3:media3-exoplayer:1.3.1")
+    implementation("androidx.media3:media3-ui:1.3.1")
+    implementation("androidx.media3:media3-common:1.3.1")
+
 
     implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor.client)
@@ -76,6 +83,7 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.annotations)
+    implementation(libs.androidx.foundation)
     ksp(libs.koin.ksp.compiler)
 
     // --- Test ---

@@ -27,7 +27,7 @@ sealed interface DiscoverEvent {
 
 @KoinViewModel
 class DiscoverViewModel(
-    private val repository: DiscoverRepository
+    private val repository: DiscoverRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State())
@@ -42,13 +42,13 @@ class DiscoverViewModel(
             when (event) {
                 DiscoverEvent.LoadAll -> {
                     repository.fetchMelodies().onSuccess { list ->
-                        _state.update { it.copy(melodies = list,  filteredMelodies = list) }
+                        _state.update { it.copy(melodies = list, filteredMelodies = list) }
                     }
                     repository.fetchSounds().onSuccess { list ->
                         _state.update { it.copy(sounds = list, filteredSounds = list) }
                     }
                     repository.getNoiseforSleep().onSuccess { list ->
-                        _state.update { it.copy(noise = list,filteredNoise = list) }
+                        _state.update { it.copy(noise = list, filteredNoise = list) }
                     }
                 }
 
@@ -86,6 +86,10 @@ class DiscoverViewModel(
                 )
             }
         }
+    }
+
+    fun onSoundSelected(sound: SoundModel) {
+        repository.saveLastSound(sound)
     }
 }
 

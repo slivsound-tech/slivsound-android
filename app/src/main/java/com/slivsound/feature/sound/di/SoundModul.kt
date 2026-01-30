@@ -1,15 +1,17 @@
-package com.slivsound.feature.discover.di
+package com.slivsound.feature.sound.di
 
 import com.slivsound.feature.discover.data.DiscoverApiRepository
 import com.slivsound.feature.discover.data.DiscoverApiRepositoryImpl
 import com.slivsound.feature.discover.data.DiscoverRepositoryImpl
 import com.slivsound.feature.discover.domain.DiscoverRepository
-import com.slivsound.feature.discover.presentation.DiscoverViewModel
-import org.koin.core.module.dsl.viewModel
+import com.slivsound.feature.sound.presentation.SoundViewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val discoverModule = module {
-    single<DiscoverApiRepository> { DiscoverApiRepositoryImpl(get()) }
+val soundModule = module {
+    single< DiscoverApiRepository> { DiscoverApiRepositoryImpl(get()) }
     single<DiscoverRepository> { DiscoverRepositoryImpl(get()) }
-    viewModel { DiscoverViewModel(repository = get()) }
+    viewModelOf(::SoundViewModel)
+
+
 }

@@ -18,20 +18,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.slivsound.feature.discover.presentation.DiscoverScreen
-import com.slivsound.feature.favorite.SoundScreen
 import com.slivsound.feature.settings.SettingsScreen
+import com.slivsound.feature.sound.presentation.SoundScreen
 import com.slivsound.navigation.GRAPH_DISCOVER
 import com.slivsound.navigation.GRAPH_SETTINGS
 import com.slivsound.navigation.GRAPH_SOUND
 import com.slivsound.navigation.ROUTE_DISCOVER_MAIN
 import com.slivsound.navigation.ROUTE_SETTINGS_MAIN
 import com.slivsound.navigation.ROUTE_SOUND_MAIN
+import com.slivsound.navigation.routeToSoundDetail
 import com.slivsound.ui.theme.SlivsoundTheme
 
 class MainActivity : ComponentActivity() {
@@ -134,11 +137,36 @@ class MainActivity : ComponentActivity() {
                         startDestination = GRAPH_DISCOVER,
                         modifier = Modifier.padding(inner)
                     ) {
+
                         navigation(route = GRAPH_DISCOVER, startDestination = ROUTE_DISCOVER_MAIN) {
-                            composable(ROUTE_DISCOVER_MAIN) { DiscoverScreen() }
+                            composable(
+                                route = "discover_main?mode={mode}",
+                                arguments = listOf(
+                                    navArgument("mode") {
+                                        type = NavType.StringType
+                                        defaultValue = "default"
+                                    }
+                                )
+                            ) { backStackEntry ->
+
+                                val mode = backStackEntry.arguments?.getString("mode") ?: "default"
+                                DiscoverScreen(
+                                    mode = mode,
+                                    navController = navController,
+                                    onSoundClick = { soundId ->
+                                        navController.navigate(routeToSoundDetail(soundId))
+                                    })
+                            }
                         }
                         navigation(route = GRAPH_SOUND, startDestination = ROUTE_SOUND_MAIN) {
-                            composable(ROUTE_SOUND_MAIN) { SoundScreen() }
+                            composable(
+                                route = ROUTE_SOUND_MAIN,
+                                arguments = listOf(navArgument("soundId") {
+                                    type = NavType.StringType
+                                })
+                            ) {
+                                SoundScreen(navController = navController)
+                            }
                         }
                         navigation(route = GRAPH_SETTINGS, startDestination = ROUTE_SETTINGS_MAIN) {
                             composable(ROUTE_SETTINGS_MAIN) { SettingsScreen() }

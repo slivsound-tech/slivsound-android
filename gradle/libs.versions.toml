@@ -18,6 +18,7 @@ kotlinx-serialization = "1.7.3"
 coroutines = "1.9.0"
 lifecycleViewModelKtx = "2.6.1"
 lifecycleViewModelCompose = "2.6.1"
+foundation = "1.9.4"
 
 [libraries]
 ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor" }
@@ -56,6 +57,7 @@ koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compos
 # Koin Annotations (KSP)
 koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koinAnnotations" }
 koin-ksp-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koinAnnotations" }
+androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 [bundles]
 ktor-client = [

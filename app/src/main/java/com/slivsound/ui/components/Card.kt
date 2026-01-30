@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ import com.slivsound.ui.theme.SlivsoundTheme
 @Composable
 fun Card(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) {
     androidx.compose.material3.Card(
@@ -35,7 +37,8 @@ fun Card(
             containerColor = MaterialTheme
                 .colorScheme.surface
         ),
-        shape = MaterialTheme.shapes.medium
+        shape = MaterialTheme.shapes.medium,
+        onClick = onClick
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(

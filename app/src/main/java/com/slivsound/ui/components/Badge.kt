@@ -42,6 +42,24 @@ fun Badge(
 }
 
 @Composable
+fun BadgeTime(
+    title: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+
+    ){
+        Text(
+            text = title,
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.labelSmall
+        )
+    }
+}
+
+
+@Composable
 fun Badge(
     icon: ImageVector,
     modifier: Modifier = Modifier

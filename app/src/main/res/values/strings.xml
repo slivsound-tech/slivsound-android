@@ -14,4 +14,14 @@
     <string name="discover_screen_section_noise_for_sleep">  Noise for Sleep</string>
     <string name="discover_screen_section_Search">Search sounds</string>
     <string name="discover_screen_no_result">No Result</string>
+
+    <string name="sound_screen_title">Good evening</string>
+    <string name="sound_screen_section_Cozy_Warm">Cozy &amp; Warm</string>
+    <string name="sound_screen_section_add_nature_sounds">You can add a maximum of 6 sounds</string>
+
+    <string name="sound_view_model_Sound_not_found">Sound not found</string>
+
+
+
+
 </resources>

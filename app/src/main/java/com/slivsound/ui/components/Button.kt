@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -206,23 +207,38 @@ private fun ButtonView(
         shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
-            contentColor   = MaterialTheme.colorScheme.onPrimary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
             disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.38f),
-            disabledContentColor   = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.38f),
+            disabledContentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.38f),
         ),
         contentPadding = PaddingValues(
             horizontal = size.padding,
             vertical = size.padding
         ),
 
-    ) {
+        ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
-        ){
+        ) {
             content()
         }
+    }
+}
+
+@Composable
+fun ButtonPlus(
+    icon: Painter,
+    onAddClick: () -> Unit,
+) {
+    IconButton(onClick = { onAddClick() }) {
+        Icon(
+            painter = icon,
+            tint = MaterialTheme.colorScheme.onPrimary,
+            contentDescription = null,
+            modifier = Modifier.size(16.dp)
+        )
     }
 }
 
@@ -271,6 +287,7 @@ fun PrimaryVectorTitleButtonPreview() {
         )
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun PrimaryPainterTitleButtonLeftPreview() {
@@ -283,6 +300,7 @@ fun PrimaryPainterTitleButtonLeftPreview() {
         )
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun PrimaryPainterTitleButtonRightPreview() {
