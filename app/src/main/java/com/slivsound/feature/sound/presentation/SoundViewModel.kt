@@ -160,6 +160,14 @@ class SoundViewModel(
         }
     }
 
+    fun onEffectDel(play: Play) {
+        viewModelScope.launch {
+            playRepository.delItem(play)
+
+        }
+    }
+
+
     fun addEffectById(soundId: String) {
         viewModelScope.launch {
             val sound = repository.getSoundById(soundId) ?: return@launch

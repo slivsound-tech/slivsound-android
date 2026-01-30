@@ -25,6 +25,11 @@ class PlayRepositoryImpl(
         _items.value = updated
     }
 
+    override suspend fun delItem(item: Play) {
+        _items.value = _items.value.filterNot { it == item }
+    }
+
+
     override fun playAll() {
         effectPlayers.values.forEach { it.play() }
     }

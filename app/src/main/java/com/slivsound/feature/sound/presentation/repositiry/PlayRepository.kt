@@ -12,6 +12,7 @@ interface PlayRepository {
 
     val items: StateFlow<List<Play>>
     suspend fun addItem(item: Play)
+    suspend fun delItem(item: Play)
     fun playAll()
     fun pauseAll()
 
